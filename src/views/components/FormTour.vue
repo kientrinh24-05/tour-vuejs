@@ -21,59 +21,57 @@
                   >
                   <argon-input type="text" :value="formData.name" @input="formData.name = $event.target.value" />
                 </div>
-                <div class="col-md-4">
-                  <label for="example-text-input" class="form-control-label"
-                    >Điểm đến thứ nhất</label
-                  >
-                  <argon-input type="email"  :value="formData.firstDestination" @input="formData.firstDestination = $event.target.value"/>
-                </div>
-                <div class="col-md-4">
-                  <label for="example-text-input" class="form-control-label"
-                    >Điểm đến thứ hai</label
-                  >
-                  <input class="form-control" type="text" :value="formData.secondDestination" @input="formData.secondDestination = $event.target.value"/>
-                </div>
-                <div class="col-md-4">
-                  <label for="example-text-input" class="form-control-label"
-                    >Điểm đến thứ ba</label
-                  >
-                  <argon-input type="text" :value="formData.thirdDestination" @input="formData.thirdDestination = $event.target.value" />
-                </div>
-
-                <div class="col-md-6">
-                  <label for="example-text-input" class="form-control-label"
-                    >Tỉnh</label
-                  >
-                  <argon-input type="text" :value="formData.province" @input="formData.province = $event.target.value" />
-                </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Thành phố</label
                   >
-                  <argon-input type="text" :value="formData.city" @input="formData.city = $event.target.value" />
+                  <argon-input type="email"  :value="formData.city" @input="formData.city = $event.target.value"/>
+                </div>
+                <div class="col-md-6">
+                  <label for="example-text-input" class="form-control-label"
+                    >Tỉnh thành</label
+                  >
+                  <input class="form-control" type="text" :value="formData.province" @input="formData.province = $event.target.value"/>
+                </div>
+                <div class="col-md-6">
+                  <label for="example-text-input" class="form-control-label"
+                    >Giá thành</label
+                  >
+                  <argon-input type="text" :value="formData.price" @input="formData.price = $event.target.value" />
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
-                    >Giá tiền</label
+                    >Đánh giá</label
                   >
-                  <argon-input type="text" :value="formData.price" @input="formData.price = $event.target.value"/>
+                  <argon-input type="text" :value="formData.rating" @input="formData.rating = $event.target.value" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
+                  <label for="example-text-input" class="form-control-label"
+                    >Thời gian</label
+                  >
+                  <argon-input type="text" :value="formData.duration" @input="formData.duration = $event.target.value" />
+                </div>
+                <div class="col-md-6">
+                  <label for="example-text-input" class="form-control-label"
+                    >Hình ảnh</label
+                  >
+                  <argon-input type="file" :value="formData.file" @input="formData.file = $event.target.value" />
+                </div>
+                <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Thể loại du lịch</label
                   >
                   <argon-select :options="tours" :selected-option="formData.selectedOption" :value="formData.selectedOption" @input="selectedOption = $event.target.value"  />
     
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
-                    >Đánh giá </label
+                    >Địa diểm</label
                   >
-                  <argon-input type="text" :value="formData.rating" @input="formData.rating = $event.target.value" />
+                  <argon-select :options="tours" :selected-option="formData.selectedPlace" :value="formData.selectedPlace" @input="selectedOption = $event.target.value"  />
+    
                 </div>
-               
-
                 <div class="col-md-12">
                   <argon-textarea type="text" :id="1" :value="formData.description" @input="formData.description = $event.target.value"  :placeholder="'Mời bạn nhập text vào'">
                     Nội dung
@@ -98,7 +96,7 @@
     </div>
   </div>
 </template>
-
+  
 <script>
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
@@ -132,14 +130,16 @@ export default {
     return {
       formData: {
         name: '',
-        firstDestination: '',
-        secondDestination: '',
-        thirdDestination: '',
-        province: '',
         city: '',
+        province: '',
         price: '',
-        selectedOption: '',
-        description: ''
+        rating: '',
+        duration: '',
+        type: '',
+        places: '',
+        categories: '',
+        description: '',
+        file: ''
      },
       tours: [
         { id: 1, value: 'TOUR_SEA', text: 'Du lịch biển'},
@@ -151,6 +151,7 @@ export default {
         { id: 7, value: 'TOUR_CAMPING', text: 'Cắm trại' }
       ],
       selectedOption: "",
+      selectedPlace: "",
     }
   },
   watch: {
@@ -160,6 +161,8 @@ export default {
         if (newVal) { 
           // this.name = newVal.name;
           this.formData = {...newVal};
+
+          console.log(this.formData , 'formData');
         } else {
           this.resetForm();
         }
@@ -170,32 +173,35 @@ export default {
   methods: {
     closeModal() {
       this.$emit("close", "");
-    },
+    },  
+
     saveData() {
-      const data = {
-        name: this.formData.name,
-        firstDestination: this.formData.firstDestination,
-        secondDestination: this.formData.secondDestination,
-        thirdDestination: this.formData.thirdDestination,
-        province: this.formData.province,
-        city: this.formData.city,
-        price: this.formData.price,
-        rating: this.formData.rating,
-        type: this.formData.selectedOption,
-        description: this.formData.description
-      };
-  
-      this.$emit("save", data);
+      const formData = new FormData();
+      formData.append('name', this.formData.name);
+      formData.append('city', this.formData.city);
+      formData.append('file', this.formData.file);
+      formData.append('province', this.formData.province);
+      formData.append('price', this.formData.price);
+      formData.append('rating', this.formData.rating);
+      formData.append('duration', this.formData.duration);
+      formData.append('places', this.formData.selectedOption);
+      formData.append('categories', this.formData.selectedOption);
+      formData.append('type', this.formData.selectedOption);
+      formData.append('description', this.formData.description);
+
+      this.$emit("save", formData);
     },
     resetForm() {
       this.formData = {
         name: '',
-        firstDestination: '',
-        secondDestination: '',
-        thirdDestination: '',
         province: '',
+        file: '',
         city: '',
+        rating: '',
         price: '',
+        duration: '',
+        places: '',
+        type: '',
         selectedOption: '',
         description: ''
      }

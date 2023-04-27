@@ -7,3 +7,4 @@ export const NOT_FOUND = 404;
 export const INTERNAL_SERVER_ERROR = 500;
 export const USER_LOCAL_STORE = "USER_LOCAL_STORE";
 export const USER_REMEMBER_LOCAL_STORE = "USER_REMEMBER_LOCAL_STORE";
+export const URL = "http://192.168.1.45:8080";

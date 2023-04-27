@@ -11,19 +11,17 @@
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hình ảnh</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên Tour</th>
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-              >Điểm đến thứ nhất</th>
+              >Loại hình du lịch</th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >Điểm đến thứ hai</th>
+              >Điểm đến</th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >Điểm đến thứ ba</th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >Tỉnh</th>
+              >Thời gian du lịch</th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >Giá tiền</th>
@@ -35,6 +33,17 @@
           </thead>
           <tbody>
             <tr v-for="product in products" :key="product.id">
+              <td class="align-center">
+                <div class="d-flex px-2 py-1">
+                  <div>
+                    <img
+                      :src="product.image"
+                      class="avatar avatar-sm me-3"
+                      alt="user1"
+                    />
+                  </div>
+                </div>
+              </td>
               <td class="align-center">
                 <div class="d-flex px-2 py-1">
                   <div>
@@ -50,25 +59,29 @@
                 </div>
               </td>
               <td class="align-center">
-                <p class="text-xs font-weight-bold mb-0">{{product.firstDestination}}</p>
+                <p class="text-xs font-weight-bold mb-0">
+                  <span v-for="(category, index) in product.categories" :key="index">
+                    {{ category.name }}
+                  </span>
+                </p>
               </td>
               <td class="align-center">
-                <p class="text-xs font-weight-bold mb-0">{{product.secondDestination}}</p>
+                <p class="text-xs font-weight-bold mb-0">
+                  <span v-for="(places, index) in product.places" :key="index">
+                    {{ places.name }} {{ places.city }}
+                  </span>
+                </p>
               </td>
-              <td class="align-center">
-                <p class="text-xs font-weight-bold mb-0">{{product.thirdDestination}}</p>
+              <td class="align-center text-center">
+                <p class="text-xs font-weight-bold mb-0">{{product.duration}}</p>
               </td>
 
               <td class="align-center">
-                <p class="text-xs font-weight-bold mb-0">{{product.province}} {{product.city}}</p>
-              </td>
-              <td class="align-center text-center text-sm">
-                <span class="badge badge-sm bg-gradient-success">{{product.type}}</span>
+                <p class="text-xs font-weight-bold mb-0">{{product.price}}</p>
               </td>
               <td class="align-center"> 
                 <p class="text-xs font-weight-bold mb-0">{{product.rating}}</p>
               </td>
-        
               <td class="align-middle">
                 <a
                   href="javascript:;"
@@ -95,6 +108,7 @@
 
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
+import formatCurrencyVN from "../../utils/helper"
 import { mapGetters } from 'vuex';
 export default {
   name: "authors-table",
@@ -113,7 +127,15 @@ export default {
   computed: {
     ...mapGetters({
       products: 'allProducts',
-    })
+    }),
+
+    formattedPrice() {
+      return this.products.map(item => {
+        return {
+          formattedPrice: formatCurrencyVN(item.price)
+        }
+      });
+    }
   },
   methods: {
     openModal() {

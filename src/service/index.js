@@ -8,7 +8,8 @@ import {
 } from "../utils/constant";
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  //baseURL: process.env.URL,
+  baseURL: 'http://localhost:8080',
 });
 
 export const apiBase = (options) =>
@@ -22,7 +23,7 @@ export const defaultRequestHeader = () => {
   const user = JSON.parse(localStorage.getItem(USER_LOCAL_STORE));
   if (user && user.token) {
     return {
-      Authorization: "Bearer " + user.token,
+      Authorization: "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MjQzNzQ5MCwiZXhwIjoxNjgyNTIzODkwfQ.Fuflkb9iLh5Ylt6ba7pgEFNYHAbS00MID5ZNgsHjvChj1p6cJOPwvmxJbs6hLO-qusxjZ1QptvFqMRwp51vowQ'
     };
   }
   return {};

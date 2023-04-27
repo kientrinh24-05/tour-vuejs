@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
-import tour from "./tour";
+// import tour from "./tour";
 import axios from 'axios';
+import { apiBase } from "../service";
 
 export default createStore({
   state: {
@@ -168,7 +169,7 @@ export default createStore({
     },
     // Product 
     async fetchProducts({ commit }) {
-      const response = await axios.get('https://6193cbfb221e680017450c11.mockapi.io/api/v2/product');
+      const response = await apiBase({url: `/api/tours`, method: "GET"});
       commit('setProducts', response.data);
     },
   
@@ -257,7 +258,7 @@ export default createStore({
     allInterests: (state) => state.interests,
     getProductById: (state) => (id) => state.products.find((product) => product.id === id)
   },
-  modules: {
-    tour
-  },
+  // modules: {
+  //   tour
+  // },
 });

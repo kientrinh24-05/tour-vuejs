@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { URL } from '../utils/constant';
 
 const state = {
   products: [],
@@ -11,7 +12,7 @@ const getters = {
 
 const actions = {
   async fetchProducts({ commit }) {
-    const response = await axios.get('https://6193cbfb221e680017450c11.mockapi.io/api/v2/product');
+    const response = await axios.get(`${URL}/api/tours`);
     commit('setProducts', response.data);
   },
 
