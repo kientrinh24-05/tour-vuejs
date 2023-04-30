@@ -1,16 +1,14 @@
 import axios from "axios";
-import {
-  UNAUTHORIZED,
-  FORBIDDEN,
-  NOT_FOUND,
-  INTERNAL_SERVER_ERROR,
-  USER_LOCAL_STORE,
-} from "../utils/constant";
+// import store from '../store/index';
+// import {
+//   UNAUTHORIZED,
+//   FORBIDDEN,
+//   NOT_FOUND,
+//   INTERNAL_SERVER_ERROR,
+//   // USER_LOCAL_STORE,
+// } from "../utils/constant";
 
-const API = axios.create({
-  //baseURL: process.env.URL,
-  baseURL: 'http://localhost:8080',
-});
+const API = axios.create();
 
 export const apiBase = (options) =>
   new Promise((resolve, reject) => {
@@ -19,50 +17,70 @@ export const apiBase = (options) =>
       .catch((error) => reject(error));
   });
 
-export const defaultRequestHeader = () => {
-  const user = JSON.parse(localStorage.getItem(USER_LOCAL_STORE));
-  if (user && user.token) {
-    return {
-      Authorization: "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MjQzNzQ5MCwiZXhwIjoxNjgyNTIzODkwfQ.Fuflkb9iLh5Ylt6ba7pgEFNYHAbS00MID5ZNgsHjvChj1p6cJOPwvmxJbs6hLO-qusxjZ1QptvFqMRwp51vowQ'
-    };
-  }
-  return {};
-};
+// export const defaultRequestHeader = () => {
+//   const user = JSON.parse(localStorage.getItem(USER_LOCAL_STORE));
+//   if (user && user.token) {
+//     return {
+//       Authorization: "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MjQzNzQ5MCwiZXhwIjoxNjgyNTIzODkwfQ.Fuflkb9iLh5Ylt6ba7pgEFNYHAbS00MID5ZNgsHjvChj1p6cJOPwvmxJbs6hLO-qusxjZ1QptvFqMRwp51vowQ'
+//     };
+//   }
+//   return {};
+// };
 
-const err = (error) => {
-  const messError = error;
-  const { response } = messError;
-  if (response) {
-    const { data, status } = response;
-    switch (status) {
-      case UNAUTHORIZED:
-        messError.message = "Error " + UNAUTHORIZED;
-        break;
-      case FORBIDDEN:
-        messError.message = `Error ${FORBIDDEN}`;
-        break;
-      case NOT_FOUND:
-        messError.message = `Error ${NOT_FOUND}`;
-        break;
-      case INTERNAL_SERVER_ERROR:
-        messError.message = `Error ${INTERNAL_SERVER_ERROR}`;
-        break;
-      default:
-        messError.message = data.message;
-    }
-  }
-  return Promise.reject(error);
-};
+// const err = (error) => {
+//   const messError = error;
+//   const { response } = messError;
+//   if (response) {
+//     const { data, status } = response;
+//     switch (status) {
+//       case UNAUTHORIZED:
+//         messError.message = "Error " + UNAUTHORIZED;
+//         break;
+//       case FORBIDDEN:
+//         messError.message = `Error ${FORBIDDEN}`;
+//         break;
+//       case NOT_FOUND:
+//         messError.message = `Error ${NOT_FOUND}`;
+//         break;
+//       case INTERNAL_SERVER_ERROR:
+//         messError.message = `Error ${INTERNAL_SERVER_ERROR}`;
+//         break;
+//       default:
+//         messError.message = data.message;
+//     }
+//   }
+//   return Promise.reject(error);
+// };
+
+// API.interceptors.request.use(
+//   (config) => ({
+//     ...config,
+//     headers: {
+//       ...config.headers,
+//       ...defaultRequestHeader(),
+//     },
+//   }),
+//   err
+// );
 
 API.interceptors.request.use(
-  (config) => ({
-    ...config,
-    headers: {
-      ...config.headers,
-      ...defaultRequestHeader(),
-    },
-  }),
-  err
+  config => {
+    let token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MjQzNzQ5MCwiZXhwIjoxNjgyNTIzODkwfQ.Fuflkb9iLh5Ylt6ba7pgEFNYHAbS00MID5ZNgsHjvChj1p6cJOPwvmxJbs6hLO-qusxjZ1QptvFqMRwp51vowQ'
+    if (token) config.headers.Authorization = 'Bearer ' + token;
+    return config;
+  },
+  async(error) => {
+    return Promise.reject(error);
+  }
 );
 
-API.interceptors.response.use((response) => response, err);
+API.interceptors.response.use(
+  data => {
+    return data;
+  },
+  async(error) => {
+    return Promise.reject(error.response);
+  }
+);
+
+export default API

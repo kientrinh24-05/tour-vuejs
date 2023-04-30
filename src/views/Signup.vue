@@ -80,7 +80,7 @@
                 </div>
                 <p class="text-sm mt-3 mb-0">
                   Bạn đã có tài khoản?
-                  <a href="javascript:;" class="text-dark font-weight-bolder">Đăng nhập</a>
+                  <router-link class="text-success text-gradient font-weight-bold" to="/signin">Đăng nhập</router-link>
                 </p>
               </form>
             </div>
@@ -98,6 +98,8 @@ import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 import ArgonBadge from "../components/ArgonBadge.vue";
 const body = document.getElementsByTagName("body")[0];
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions } = createNamespacedHelpers('auth');
 
 export default {
   name: "signin",
@@ -112,7 +114,7 @@ export default {
       name: '',
       email: '',
       password: '',
-      fieldTour:'',
+      fieldTour: '',
       tours: [
         { id: 1, name: 'TOUR_SEA', nameVN: 'du lịch biển', selected: false},
         { id: 2, name: 'TOUR_CUISINE', nameVN: 'du lịch ẩm thực', selected: false },
@@ -132,15 +134,24 @@ export default {
     body.classList.remove("bg-gray-100");
   },
   methods: {
-
+    ...mapActions(['register']),
     onSubmit() {
-      const data = {
+      if(!this.fieldTour) {
+        this.fieldTour = this.tours.filter(item => item.selected === true).map(name => name.name).join(',')
+      }
+      let data = {
         name: this.name,
         email: this.email,
         password: this.password,
-        tours: this.fieldTour
-      };
-      console.log(data); 
+        tours: this.fieldTour.split(',')
+      };    
+      this.register(data)
+      .then(res => {
+        console.log(res, 'res');
+      })
+      .catch(err=> {
+        console.log(err);
+      })
     },
     addBadge: function(tour) {
       tour.selected = !tour.selected;

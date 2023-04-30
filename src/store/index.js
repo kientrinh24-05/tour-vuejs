@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
-// import tour from "./tour";
+// import tour from "./modules/tour";
+import auth from './modules/auth';
 import axios from 'axios';
 import { apiBase } from "../service";
 
@@ -258,7 +259,7 @@ export default createStore({
     allInterests: (state) => state.interests,
     getProductById: (state) => (id) => state.products.find((product) => product.id === id)
   },
-  // modules: {
-  //   tour
-  // },
+  modules: {
+    auth
+  },
 });

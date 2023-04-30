@@ -38,17 +38,14 @@
                         color="success"
                         fullWidth
                         size="lg"
-                        @click="login()"
+                        @click="submit()"
                       >Đăng nhập</argon-button>
                     </div>
                 </div>
                 <div class="px-1 pt-0 text-center card-footer px-lg-2">
                   <p class="mx-auto mb-4 text-sm">
                    Bạn chưa có tài khoản?
-                    <a
-                      href="javascript:;"
-                      class="text-success text-gradient font-weight-bold"
-                    >Đăng ký</a>
+                   <router-link class="text-success text-gradient font-weight-bold" to="/signup">Đăng ký</router-link>
                   </p>
                 </div>
               </div>
@@ -82,6 +79,8 @@ import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 const body = document.getElementsByTagName("body")[0];
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions } = createNamespacedHelpers('auth');
 
 export default {
   name: "signin",
@@ -99,12 +98,18 @@ export default {
     }
   },
   methods: {
-    login() {
-      console.log("Login");
-      this.$store.dispatch('login', {
-        email: this.formData.email,
-        password: this.formData.password,
-        router: this.$router
+    ...mapActions(['login']),
+    submit() {
+      let data = {
+        username: this.formData.email,
+        password: this.formData.password 
+      }
+      this.login(data)
+      .then(res => {
+        console.log(res, 'res');
+      })
+      .catch(err=> {
+        console.log(err);
       })
     }
   },

@@ -1,4 +1,4 @@
-export function formatCurrencyVN(value) {
+export default function formatCurrencyVN(value) {
   const formatter = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',

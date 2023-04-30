@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { URL } from '../utils/constant';
+import { URL } from '../../../utils/constant';
 
 const state = {
   products: [],
