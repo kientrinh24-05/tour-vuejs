@@ -1,61 +1,78 @@
-import axios from 'axios';
-import { URL } from '../../../utils/constant';
+import * as types from './types';
+import tour from '../../../services/tour';
 
 const state = {
-  products: [],
-};
+  allTour: [],
+  tour: null
+}
 
 const getters = {
-  allProducts: (state) => state.products,
-  getProductById: (state) => (id) => state.products.find((product) => product.id === id)
-};
+  allTour: state => {
+    return state.allTour ? state.allTour : [];
+  }
+}
 
 const actions = {
-  async fetchProducts({ commit }) {
-    const response = await axios.get(`${URL}/api/tours`);
-    commit('setProducts', response.data);
-  },
-
-  async addProduct({ commit }, product) {
-    const response = await axios.post('https://6193cbfb221e680017450c11.mockapi.io/api/v2/product', product);
-    commit('newProduct', response.data);
-  },
-
-  async updateProduct({ commit }, product) {
-    const response = await axios.put(`https://6193cbfb221e680017450c11.mockapi.io/api/v2/product/${product.id}`, product);
-    commit('updateProduct', response.data);
-  },
-
-  async deleteProduct({ commit }, id) {
-    await axios.delete(`https://6193cbfb221e680017450c11.mockapi.io/api/v2/product/${id}`);
-    commit('removeProduct', id);
-  },
-};
-
-const mutations = {
-  setProducts: (state, products) => {
-    state.products = products;
-  },
-
-  newProduct: (state, product) => {
-    state.products.push(product);
-  },
-
-  updateProduct: (state, product) => {
-    const index = state.products.findIndex((p) => p.id === product.id);
-    if (index !== -1) {
-      state.products.splice(index, 1, product);
+  async createTour({ commit }, data) {
+    try {
+      const response = await tour.createTour(data);
+      commit(types.CREATE);
+      return Promise.resolve(response.data);
+    } catch (e) {
+      console.group('[Vuex][Actions] Error from createTour');
+      return Promise.reject(e.status);
     }
   },
-
-  removeProduct: (state, id) => {
-    state.products = state.products.filter((product) => product.id !== id);
+  async updateTour({ commit }, data) {
+    try {
+      const response = await tour.updateTour(data);
+      commit(types.UPDATE);
+      return Promise.resolve(response.data);
+    } catch (e) {
+      console.group('[Vuex][Actions] Error from updateTour');
+      return Promise.reject(e.status);
+    }
   },
-};
+  async getAllTour({ commit }) {
+    try {
+      const response = await tour.getAllTour();
+      commit(types.GETALL, response.data);
+      return Promise.resolve(response.data);
+    } catch (e) {
+      console.group('[Vuex][Actions] Error from getAllTour');
+      console.log(e,'eee');
+      return Promise.reject(e.status);
+    }
+  },
+  async deleteTour({ commit }, data) {
+    try {
+      const response = await tour.deleteTour(data);
+      commit(types.DELETE);
+      return Promise.resolve(response.data);
+    } catch (e) {
+      console.group('[Vuex][Actions] Error from deleteTour');
+      return Promise.reject(e.status);
+    }
+  },
+  
+}
+
+const mutations = {
+  [types.CREATE](){
+  },
+  [types.UPDATE](){
+  },
+  [types.GETALL](state, data){
+    state.allTour = data
+  },
+  [types.DELETE](){
+  }
+}
 
 export default {
+  namespaced: true,
   state,
   getters,
   actions,
-  mutations,
+  mutations
 };

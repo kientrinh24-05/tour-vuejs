@@ -33,7 +33,6 @@ const actions = {
     try {
       const response = await auth.register(data);
       commit(types.REGISTER);
-      console.log(data, '123');
       return Promise.resolve(response.data);
     } catch (e) {
       console.group('[Vuex][Actions] Error from register');

@@ -67,6 +67,11 @@ API.interceptors.request.use(
   config => {
     let token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MjQzNzQ5MCwiZXhwIjoxNjgyNTIzODkwfQ.Fuflkb9iLh5Ylt6ba7pgEFNYHAbS00MID5ZNgsHjvChj1p6cJOPwvmxJbs6hLO-qusxjZ1QptvFqMRwp51vowQ'
     if (token) config.headers.Authorization = 'Bearer ' + token;
+    if(config.isFormData) {
+      config.headers['Content-Type'] = 'multipart/form-data'}
+    else {
+      config.headers['Content-Type'] = 'application/json'
+    }
     return config;
   },
   async(error) => {

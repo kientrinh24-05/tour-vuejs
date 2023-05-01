@@ -28,6 +28,8 @@
 import AuthorsTable from "./components/AuthorsTable.vue";
 import FormTour from "./components/FormTour.vue";
 import ConfirmModal from './components/ConfirmModal.vue';
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions, mapGetters } = createNamespacedHelpers('tour')
 
 export default {
   name: "tour",
@@ -44,10 +46,14 @@ export default {
       currentIdRemove: "",
     };
   },
+  computed: {
+    ...mapGetters(['allTour'])
+  },
   methods: {
+    ...mapActions(['createTour', 'updateTour', 'getALlTour']),
     handleSubmit(data) {
       // Do something with the data
-      console.log(data)
+      console.log(data, 'tour')
     },
 
     closeForm() {
@@ -63,15 +69,15 @@ export default {
       this.editingTour = tour;
       this.showModal = true;
     },
-
     saveForm(body) {
       const id = this.editingTour?.id;
       if (this.editingTour) {
-        this.$store.dispatch('updateProduct',{id, body});
+        this.updateTour({id: id, data: body});
       } else {
-        this.$store.dispatch('addProduct', body);
+        console.log('vo1', body);
+        this.createTour(body);
       }
-      this.showModal = false;
+      // this.showModal = false;
     },
 
     removeTour(id) {
@@ -89,6 +95,10 @@ export default {
       this.isShowConfirmModal = false;
     },
   
+  },
+  created() {
+    console.log(this.allTour, 'allTour');
+    this.getALlTour();
   }
 };
 </script>
