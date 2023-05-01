@@ -69,7 +69,7 @@
                   <label for="example-text-input" class="form-control-label"
                     >Địa diểm</label
                   >
-                  <argon-select :options="tours" :selected-option="formData.selectedPlace" :value="formData.selectedPlace" @input="selectedOption = $event.target.value"  />
+                  <argon-select :options="tours" :selected-option="formData.selectedPlace" :value="formData.selectedPlace" @input="selectedPlace = $event.target.value"  />
     
                 </div>
                 <div class="col-md-12">
@@ -188,7 +188,6 @@ export default {
       formData.append('categories', this.formData.selectedOption);
       formData.append('type', this.formData.selectedOption);
       formData.append('description', this.formData.description);
-
       this.$emit("save", formData);
     },
     resetForm() {

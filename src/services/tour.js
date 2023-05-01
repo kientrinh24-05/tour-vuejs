@@ -1,16 +1,14 @@
 import API from "../service";
+import * as types from '../utils/constant';
 
-const baseURL =  'http://localhost:8089/api';
-
-const tourUrl = `${baseURL}/tours`;
+const tourUrl = `${types.URL}/tours`;
 
 export default {
   createTour(data) {
-    console.log(data, 'create');
-    return API.post(tourUrl, {...data}, {isFormData: true})
+    return API.post(tourUrl, data, {isFormData: true})
   },
   updateTour(data) {
-    return API.put(`${tourUrl}/${data.id}`, {...data.data})
+    return API.put(`${tourUrl}/${data.id}`, data.data, {isFormData: true})
   },
   getAllTour() {
     return API.get(tourUrl)

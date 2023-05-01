@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in products" :key="product.id">
+            <tr v-for="product in allTours" :key="product.id">
               <td class="align-center">
                 <div class="d-flex px-2 py-1">
                   <div>
@@ -92,7 +92,7 @@
                 >Edit</a>
                 <a
                 
-                  class="text-secondary font-weight-bold text-xs"
+                  class="text-secondary font-weight-bold text-xs text-edit"
                   data-toggle="tooltip"
                   data-original-title="Edit user"
                   @click="handleRemove(product?.id)"
@@ -109,25 +109,31 @@
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
 import formatCurrencyVN from "../../utils/helper"
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 export default {
   name: "authors-table",
   components: {
     ArgonButton,
   },
   props: {
-    tour: Object
+    tour: Object,
+    allTours: {
+      type: Array,
+      default() {
+        return [];
+      }
+    }
   },
-  mounted() {
-    console.log(this.products)
-  },
-  created() {
-    this.$store.dispatch('fetchProducts');
-  },
+  // mounted() {
+  //   console.log(this.products)
+  // },
+  // created() {
+  //   this.$store.dispatch('fetchProducts');
+  // },
   computed: {
-    ...mapGetters({
-      products: 'allProducts',
-    }),
+    // ...mapGetters({
+    //   products: 'allProducts',
+    // }),
 
     formattedPrice() {
       return this.products.map(item => {

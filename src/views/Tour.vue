@@ -1,6 +1,5 @@
 <template>
   <div class="py-4 container-fluid">
-    
     <div class=" row">
       <div class="col-12">
         <form-tour 
@@ -12,7 +11,7 @@
           @save="saveForm($event)"
           >
         </form-tour>
-        <authors-table @open="oepnModal()" @edit="editTour($event)" @remove="removeTour($event)"/>
+        <authors-table :allTours="allTours" @open="oepnModal()" @edit="editTour($event)" @remove="removeTour($event)"/>
         <confirm-modal
           :show="isShowConfirmModal"
           @close="cancelRemove()" 
@@ -47,10 +46,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['allTour'])
+    ...mapGetters(['allTours'])
   },
   methods: {
-    ...mapActions(['createTour', 'updateTour', 'getALlTour']),
+    ...mapActions(['createTour', 'updateTour', 'getAllTour', 'deleteTour']),
     handleSubmit(data) {
       // Do something with the data
       console.log(data, 'tour')
@@ -66,19 +65,19 @@ export default {
     },
 
     editTour(tour) {
-      this.editingTour = tour;
-      this.showModal = true;
+      if(tour) {
+        this.editingTour = tour;
+        this.showModal = true;
+      }  
     },
     saveForm(body) {
-      console.log(body, 'body');
       const id = this.editingTour?.id;
       if (this.editingTour) {
         this.updateTour({id: id, data: body});
       } else {
-        console.log('vo1', body);
         this.createTour(body);
       }
-      // this.showModal = false;
+      this.showModal = false;
     },
 
     removeTour(id) {
@@ -92,14 +91,13 @@ export default {
       this.isShowConfirmModal = false;
     },
     confirmRemove() {
-      this.$store.dispatch('deleteProduct', this.currentIdRemove);
+      this.deleteTour(this.currentIdRemove)
       this.isShowConfirmModal = false;
     },
   
   },
   created() {
-    console.log(this.allTour, 'allTour');
-    this.getALlTour();
+    this.getAllTour();
   }
 };
 </script>

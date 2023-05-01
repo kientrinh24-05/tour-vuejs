@@ -1,9 +1,9 @@
 import API from "../service"
+import * as types from '../utils/constant';
 
-const baseURL =  'http://localhost:8080/api'
-const loginUrl = `${baseURL}/auth/login`;
-const logoutUrl = `${baseURL}/auth/signout`;
-const registerUrl = `${baseURL}/auth/register`;
+const loginUrl = `${types.URL}/auth/login`;
+const logoutUrl = `${types.URL}/auth/signout`;
+const registerUrl = `${types.URL}/auth/register`;
 
 export default {
   login(data) {
@@ -13,7 +13,6 @@ export default {
     return API.post(logoutUrl)
   },
   register(data) {
-    console.log(data,'data');
     return API.post(registerUrl, {...data})
   }
 }

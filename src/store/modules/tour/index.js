@@ -1,14 +1,79 @@
 import * as types from './types';
 import tour from '../../../services/tour';
 
+const allTour = [
+  {
+    "id": 1,
+    "name": "Du l?ch test",
+    "duration": "Trong ngày",
+    "province": "Bình Ð?nh",
+    "city": "Quy Nhon",
+    "price": 250000.0,
+    "rating": 3,
+    "type": "SEA",
+    "description": "Du l?ch di cu",
+    "image": "/files/category.png",
+    "places": [],
+    "categories": []
+},
+{
+    "id": 2,
+    "name": "Du l?ch test",
+    "duration": "Trong ngày",
+    "province": "Bình Ð?nh",
+    "city": "Quy Nhon",
+    "price": 250000.0,
+    "rating": 3,
+    "type": "SEA",
+    "description": "Du l?ch di cu",
+    "image": "/files/category.png",
+    "places": [],
+    "categories": []
+},
+{
+    "id": 3,
+    "name": "Du l?ch test",
+    "duration": "Trong ngày",
+    "province": "Bình Ð?nh",
+    "city": "Quy Nhon",
+    "price": 250000.0,
+    "rating": 3,
+    "type": "SEA",
+    "description": "Du l?ch di cu",
+    "image": "/files/category.png",
+    "places": [],
+    "categories": []
+}
+]
+
+function getAllTour(data) {
+  return data.map(item => {
+   return {
+    id: item.id,
+    name: item.name,
+    duration: item.duration,
+    province: item.province,
+    city: item.city,
+    price: item.price,
+    rating: item.rating,
+    type: item.type,
+    description: item.description,
+    image: item.image,
+    places: item.places,
+    categories: item.categories
+   }
+  })
+  
+}
+
 const state = {
-  allTour: [],
+  allTours: [],
   tour: null
 }
 
 const getters = {
-  allTour: state => {
-    return state.allTour ? state.allTour : [];
+  allTours: state => {
+    return state.allTour ? getAllTour(allTour) : getAllTour(allTour);
   }
 }
 
@@ -63,7 +128,7 @@ const mutations = {
   [types.UPDATE](){
   },
   [types.GETALL](state, data){
-    state.allTour = data
+    state.allTours = data
   },
   [types.DELETE](){
   }
