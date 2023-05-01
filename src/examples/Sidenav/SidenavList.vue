@@ -67,6 +67,19 @@
           </template>
         </sidenav-item>
       </li>
+      <li class="nav-item">
+        <sidenav-item
+          url="/user"
+          :class="getRoute() === 'user' ? 'active' : ''"
+          :navText="this.$store.state.isRTL ? 'الجداول' : 'Quản lý người dùng'"
+        >
+          <template v-slot:icon>
+            <i
+              class="ni ni-air-baloon text-warning text-sm opacity-10"
+            ></i>
+          </template>
+        </sidenav-item>
+      </li>
 
       <li class="nav-item">
         <sidenav-item

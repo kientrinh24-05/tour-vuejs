@@ -78,6 +78,7 @@
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
+import router from '@/router'
 const body = document.getElementsByTagName("body")[0];
 import { createNamespacedHelpers } from 'vuex';
 const { mapActions } = createNamespacedHelpers('auth');
@@ -106,7 +107,8 @@ export default {
       }
       this.login(data)
       .then(res => {
-        console.log(res, 'res');
+        if (!res) return;
+        router.push('/dashboard-default')
       })
       .catch(err=> {
         console.log(err);

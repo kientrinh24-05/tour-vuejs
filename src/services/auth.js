@@ -1,6 +1,6 @@
 import API from "../service"
 
-const baseURL =  'http://localhost:8089/api'
+const baseURL =  'http://localhost:8080/api'
 const loginUrl = `${baseURL}/auth/login`;
 const logoutUrl = `${baseURL}/auth/signout`;
 const registerUrl = `${baseURL}/auth/register`;

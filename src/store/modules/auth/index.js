@@ -14,6 +14,8 @@ const actions = {
     try {
       const response = await auth.login(data);
       commit(types.LOGIN_SUCCESS, {...response});
+
+      console.log({...response});
       return Promise.resolve(response.data);
     } catch (e) {
       console.group('[Vuex][Actions] Error from login');
@@ -35,7 +37,6 @@ const actions = {
       commit(types.REGISTER);
       return Promise.resolve(response.data);
     } catch (e) {
-      console.group('[Vuex][Actions] Error from register');
       return Promise.reject(e.status);
     }
   },
@@ -43,7 +44,7 @@ const actions = {
 
 const mutations = {
   [types.LOGIN_SUCCESS](state, data){
-    state.user = data
+    state.user = data.data;
   },
   [types.REGISTER](){
   }

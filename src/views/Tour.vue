@@ -70,6 +70,7 @@ export default {
       this.showModal = true;
     },
     saveForm(body) {
+      console.log(body, 'body');
       const id = this.editingTour?.id;
       if (this.editingTour) {
         this.updateTour({id: id, data: body});
