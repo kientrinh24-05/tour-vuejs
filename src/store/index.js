@@ -1,8 +1,11 @@
 import { createStore } from "vuex";
-import tour from "./modules/tour";
-import auth from './modules/auth';
 import axios from 'axios';
 import { apiBase } from "../service";
+import tour from "./modules/tour";
+import auth from './modules/auth';
+import category from './modules/category';
+import interest from './modules/interest';
+import places from './modules/places';
 
 export default createStore({
   state: {
@@ -261,6 +264,9 @@ export default createStore({
   },
   modules: {
     auth,
-    tour
+    tour,
+    category,
+    interest,
+    places
   },
 });

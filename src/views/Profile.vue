@@ -16,11 +16,9 @@
           <div class="row gx-4">
             <div class="col-auto">
               <div class="avatar avatar-xl position-relative">
-                <img
-                  src="../assets/img/team-1.jpg"
-                  alt="profile_image"
-                  class="shadow-sm w-100 border-radius-lg"
+                <img @click="emitEventLoadImage" :src="imageUrl" alt="Uploaded image"
                 />
+                <input type="file" ref="fileInput" class="d-none" @change="handleFileChange">
               </div>
             </div>
             <div class="col-auto my-auto">
@@ -296,14 +294,28 @@ import ArgonButton from "@/components/ArgonButton.vue";
 const body = document.getElementsByTagName("body")[0];
 
 export default {
+  components: { ProfileCard, ArgonInput, ArgonButton },
   name: "profile",
   data() {
     return {
-      showMenu: false
+      showMenu: false,
+      imageUrl: '',
+      fileInput: null 
     };
   },
-  components: { ProfileCard, ArgonInput, ArgonButton },
-
+  methods: {
+    emitEventLoadImage() {
+      this.$refs.fileInput.click()
+    },
+    handleFileChange() {
+      const file = this.$refs.fileInput.files[0]
+      const reader = new FileReader()
+      reader.onload = () => {
+        this.imageUrl = reader.result
+      }
+      reader.readAsDataURL(file)
+    }
+  },
   mounted() {
     this.$store.state.isAbsolute = true;
     setNavPills();

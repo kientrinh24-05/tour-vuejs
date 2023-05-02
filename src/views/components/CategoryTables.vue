@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="category in categorys" :key="category.id">
+            <tr v-for="category in allCategory" :key="category.id">
               <td class="align-center">
                 <div class="d-flex px-2 py-1">
         
@@ -46,7 +46,7 @@
               <td class="align-middle">
                 <a href="javascript:;" class="text-secondary font-weight-bold text-xs text-edit" data-toggle="tooltip"
                   data-original-title="Edit user" @click="handleEdit(category)">Edit</a>
-                <a class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"
+                <a class="text-secondary font-weight-bold text-xs text-edit" data-toggle="tooltip" data-original-title="Edit user"
                   @click="handleRemove(category?.id)">Remove</a>
               </td>
             </tr>
@@ -59,29 +59,29 @@
 
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 export default {
   name: "category-tables",
   components: {
     ArgonButton,
   },
   props: {
-    category: Object
+    category: Object,
+    allCategory: {
+      type: Array,
+      default() {
+        return [];
+      }
+    }
   },
   data() {
     return {}
   },
   mounted() {
-    console.log(this.products)
   },
   created() {
-    console.log(this.categoryFake);
-    this.$store.dispatch('fetchCategorys');
   },
   computed: {
-    ...mapGetters({
-      categorys: 'allCategorys',
-    })
   },
   methods: {
     openModal() {

@@ -19,7 +19,7 @@
                   <label for="example-text-input" class="form-control-label"
                     >Thể loại tour</label
                   >
-                  <argon-select :options="tours" :selected-option="selectedOption" :value="formData.selectedOption" @input="formData.selectedOption = $event.target.value"  />
+                  <argon-select :options="tours" :selectedOption="formData.key" @change="formData.key = $event.target.value"  />
     
                 </div>
                 <div class="col-md-12">
@@ -90,7 +90,6 @@ export default {
         { id: 6, value: 'TOUR_SIGHTSEEING', text: 'Tham quan' },
         { id: 7, value: 'TOUR_CAMPING', text: 'Cắm trại' }
       ],
-      selectedOption: "",
     }
   },
   watch: {
@@ -113,7 +112,7 @@ export default {
     saveData() {
       const data = {
         name: this.formData.name,
-        key: this.formData.selectedOption,
+        key: this.formData.key,
       };
       this.$emit("save", data);
       this.closeModal();

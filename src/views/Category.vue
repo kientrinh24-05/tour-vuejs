@@ -12,7 +12,7 @@
           @save="saveForm($event)"
           >
         </form-category>
-        <category-tables @open="oepnModal()" @edit="editTour($event)" @remove="removeTour($event)"/>
+        <category-tables :allCategory="categoryAll" @open="oepnModal()" @edit="editTour($event)" @remove="removeTour($event)"/>
         <confirm-modal
           :show="isShowConfirmModal"
           @close="cancelRemove()" 
@@ -28,6 +28,8 @@
 import CategoryTables from "./components/CategoryTables.vue";
 import FormCategory from "./components/FormCategory.vue";
 import ConfirmModal from './components/ConfirmModal.vue';
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions, mapGetters } = createNamespacedHelpers('category')
 
 export default {
   name: "category",
@@ -44,7 +46,11 @@ export default {
       currentIdRemove: "",
     };
   },
+  computed: {
+    ...mapGetters(['categoryAll'])
+  },
   methods: {
+    ...mapActions(['createCategory', 'updateCategory', 'getAllCategory', 'deleteCategory']),
     handleSubmit(data) {
       // Do something with the data
       console.log(data)
@@ -60,19 +66,19 @@ export default {
     },
 
     editTour(tour) {
-      console.log(tour);
-      this.editingCategory = tour;
-      this.showModal = true;
+      console.log(tour, 'tour');
+      if(tour) {
+        this.editingCategory = tour;
+        this.showModal = true;
+      }
     },
 
     saveForm(body) {
-      console.log(body);
       const id = this.editingCategory?.id;
       if (this.editingCategory) {
-        console.log("!#1");
-        this.$store.dispatch('updateCategory',{id, body});
+        this.updateCategory({id: id, data: body});
       } else {
-        this.$store.dispatch('addCategory', body);
+        this.createCategory(body);
       }
       this.showModal = false;
     },
@@ -88,10 +94,14 @@ export default {
       this.isShowConfirmModal = false;
     },
     confirmRemove() {
-      this.$store.dispatch('deleteCategory', this.currentIdRemove);
+      this.deleteCategory(this.currentIdRemove);
       this.isShowConfirmModal = false;
     },
   
-  }
+  },
+  created() {
+    console.log(this.categoryAll, '123');
+    this.getAllCategory();
+  },
 };
 </script>

@@ -1,7 +1,7 @@
 import * as types from './types';
-import tour from '../../../services/tour';
+import places from '../../../services/places';
 
-const allTour = [
+const allPlaces = [
   {
     "id": 1,
     "name": "Du l?ch test",
@@ -46,7 +46,7 @@ const allTour = [
 }
 ]
 
-function getAllTour(data) {
+function getAllPlaces(data) {
   return data.map(item => {
    return {
     id: item.id,
@@ -67,55 +67,55 @@ function getAllTour(data) {
 }
 
 const state = {
-  allTours: [],
+  allPlaces: [],
   tour: null
 }
 
 const getters = {
-  allTours: state => {
-    return state.allTour ? getAllTour(allTour) : getAllTour(allTour);
+  allPlaces: state => {
+    return state.allPlaces ? getAllPlaces(allPlaces) : getAllPlaces(allPlaces);
   }
 }
 
 const actions = {
-  async createTour({ commit }, data) {
+  async createPlaces({ commit }, data) {
     try {
-      const response = await tour.createTour(data);
+      const response = await places.createPlaces(data);
       commit(types.CREATE);
       return Promise.resolve(response.data);
     } catch (e) {
-      console.group('[Vuex][Actions] Error from createTour');
+      console.group('[Vuex][Actions] Error from createPlaces');
       return Promise.reject(e.status);
     }
   },
-  async updateTour({ commit }, data) {
+  async updatePlaces({ commit }, data) {
     try {
-      const response = await tour.updateTour(data);
+      const response = await places.updatePlaces(data);
       commit(types.UPDATE);
       return Promise.resolve(response.data);
     } catch (e) {
-      console.group('[Vuex][Actions] Error from updateTour');
+      console.group('[Vuex][Actions] Error from updatePlaces');
       return Promise.reject(e.status);
     }
   },
-  async getAllTour({ commit }) {
+  async getAllPlaces({ commit }) {
     try {
-      const response = await tour.getAllTour();
+      const response = await places.getAllPlaces();
       commit(types.GETALL, response.data);
       return Promise.resolve(response.data);
     } catch (e) {
-      console.group('[Vuex][Actions] Error from getAllTour');
+      console.group('[Vuex][Actions] Error from getAllPlaces');
       console.log(e,'eee');
       return Promise.reject(e.status);
     }
   },
-  async deleteTour({ commit }, data) {
+  async deletePlaces({ commit }, data) {
     try {
-      const response = await tour.deleteTour(data);
+      const response = await places.deletePlaces(data);
       commit(types.DELETE);
       return Promise.resolve(response.data);
     } catch (e) {
-      console.group('[Vuex][Actions] Error from deleteTour');
+      console.group('[Vuex][Actions] Error from deletePlaces');
       return Promise.reject(e.status);
     }
   },
@@ -128,7 +128,7 @@ const mutations = {
   [types.UPDATE](){
   },
   [types.GETALL](state, data){
-    state.allTours = data
+    state.allPlaces = data
   },
   [types.DELETE](){
   }

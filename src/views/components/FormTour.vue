@@ -62,14 +62,14 @@
                   <label for="example-text-input" class="form-control-label"
                     >Thể loại du lịch</label
                   >
-                  <argon-select :options="tours" :selected-option="formData.selectedOption" :value="formData.selectedOption" @input="selectedOption = $event.target.value"  />
+                  <argon-select :options="tours" :selectedOption="formData.type"  @change="formData.type = $event.target.value" />
     
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Địa diểm</label
                   >
-                  <argon-select :options="tours" :selected-option="formData.selectedPlace" :value="formData.selectedPlace" @input="selectedPlace = $event.target.value"  />
+                  <argon-select :options="tours" :selectedOption="formData.places" @change="formData.places = $event.target.value"  />
     
                 </div>
                 <div class="col-md-12">
@@ -137,9 +137,9 @@ export default {
         duration: '',
         type: '',
         places: '',
-        categories: '',
+        categories: [],
         description: '',
-        file: ''
+        file: '',
      },
       tours: [
         { id: 1, value: 'TOUR_SEA', text: 'Du lịch biển'},
@@ -150,19 +150,16 @@ export default {
         { id: 6, value: 'TOUR_SIGHTSEEING', text: 'Tham quan' },
         { id: 7, value: 'TOUR_CAMPING', text: 'Cắm trại' }
       ],
-      selectedOption: "",
-      selectedPlace: "",
+      
     }
   },
   watch: {
     tour: {
       handler(newVal) {
-        console.log(newVal);
+        
         if (newVal) { 
-          // this.name = newVal.name;
           this.formData = {...newVal};
-
-          console.log(this.formData , 'formData');
+          console.log(this.formData,'tour');
         } else {
           this.resetForm();
         }
@@ -174,20 +171,22 @@ export default {
     closeModal() {
       this.$emit("close", "");
     },  
-
+    onchange(event) {
+      console.log(event, 'svent');
+    },
     saveData() {
       const formData = new FormData();
       formData.append('name', this.formData.name);
       formData.append('city', this.formData.city);
-      formData.append('file', this.formData.file);
       formData.append('province', this.formData.province);
       formData.append('price', this.formData.price);
       formData.append('rating', this.formData.rating);
       formData.append('duration', this.formData.duration);
-      formData.append('places', this.formData.selectedOption);
-      formData.append('categories', this.formData.selectedOption);
-      formData.append('type', this.formData.selectedOption);
+      formData.append('image', this.formData.file);
+      formData.append('type', this.formData.type);
+      formData.append('places', this.formData.places);
       formData.append('description', this.formData.description);
+      formData.append('categories', this.formData.categories);
       this.$emit("save", formData);
     },
     resetForm() {
@@ -201,8 +200,8 @@ export default {
         duration: '',
         places: '',
         type: '',
-        selectedOption: '',
-        description: ''
+        description: '',
+        categories: []
      }
     }
   }

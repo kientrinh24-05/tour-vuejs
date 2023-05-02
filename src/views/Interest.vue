@@ -1,6 +1,5 @@
 <template>
-  <div class="py-4 container-fluid">
-    
+  <div class="py-4 container-fluid">    
     <div class=" row">
       <div class="col-12">
         <form-interest 
@@ -12,7 +11,7 @@
           @save="saveForm($event)"
           >
         </form-interest>
-        <interest-table @open="oepnModal()" @edit="editTour($event)" @remove="removeTour($event)"/>
+        <interest-table :interestAll="interestAll" @open="oepnModal()" @edit="editTour($event)" @remove="removeTour($event)"/>
         <confirm-modal
           :show="isShowConfirmModal"
           @close="cancelRemove()" 
@@ -28,6 +27,8 @@
 import InterestTable from "./components/InterestTable.vue";
 import FormInterest from "./components/FormInterest.vue";
 import ConfirmModal from './components/ConfirmModal.vue';
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions, mapGetters } = createNamespacedHelpers('interest')
 
 export default {
   name: "interest",
@@ -44,7 +45,11 @@ export default {
       currentIdRemove: "",
     };
   },
+  computed: {
+    ...mapGetters(['interestAll'])
+  },
   methods: {
+    ...mapActions(['createInterest', 'updateInterest', 'getAllInterest', 'deleteInterest']),
     handleSubmit(data) {
       // Do something with the data
       console.log(data)
@@ -60,16 +65,18 @@ export default {
     },
 
     editTour(tour) {
-      this.editingTour = tour;
-      this.showModal = true;
+      if(tour) {
+        this.editingTour = tour;
+        this.showModal = true;
+      }
     },
-
+ 
     saveForm(body) {
       const id = this.editingTour?.id;
       if (this.editingTour) {
-        this.$store.dispatch('updateInterest',{id, body});
+        this.updateInterest({id: id, data: body});
       } else {
-        this.$store.dispatch('addInterest', body);
+        this.createInterest(body);
       }
       this.showModal = false;
     },
@@ -85,10 +92,13 @@ export default {
       this.isShowConfirmModal = false;
     },
     confirmRemove() {
-      this.$store.dispatch('deleteProduct', this.currentIdRemove);
+      this.deleteInterest(this.currentIdRemove);
       this.isShowConfirmModal = false;
     },
   
+  },
+  created() {
+    this.getAllInterest()
   }
 };
 </script>

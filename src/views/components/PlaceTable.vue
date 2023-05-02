@@ -28,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in products" :key="product.id">
+            <tr v-for="product in allPlaces" :key="product.id">
               <td class="align-center">
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
@@ -85,25 +85,31 @@
 
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 export default {
   name: "place-table",
   components: {
     ArgonButton,
   },
   props: {
-    tour: Object
+    tour: Object,
+    allPlaces: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
   },
   mounted() {
     console.log(this.products)
   },
   created() {
-    this.$store.dispatch('fetchProducts');
+    // this.$store.dispatch('fetchProducts');
   },
   computed: {
-    ...mapGetters({
-      products: 'allProducts',
-    })
+    // ...mapGetters({
+    //   products: 'allProducts',
+    // })
   },
   methods: {
     openModal() {

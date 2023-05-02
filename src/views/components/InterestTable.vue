@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in interests" :key="product.id">
+            <tr v-for="product in interestAll" :key="product.id">
               <td class="align-center">
                 <div class="d-flex px-2 py-1">
                   <div>
@@ -48,7 +48,7 @@
                 >Edit</a>
                 <a
                 
-                  class="text-secondary font-weight-bold text-xs"
+                  class="text-secondary font-weight-bold text-xs text-edit"
                   data-toggle="tooltip"
                   data-original-title="Edit user"
                   @click="handleRemove(product?.id)"
@@ -64,23 +64,23 @@
 
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex';
 export default {
   name: "interest-table",
   components: {
     ArgonButton,
   },
   props: {
-    tour: Object
+    tour: Object,
+    interestAll: {
+      type: Array,
+      default() {
+        return [];
+      }
+    }
   },
   mounted() {},
   created() {
-    this.$store.dispatch('fetchInterests');
-  },
-  computed: {
-    ...mapGetters({
-      interests: 'allInterests',
-    })
   },
   methods: {
     openModal() {

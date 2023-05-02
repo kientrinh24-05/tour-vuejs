@@ -12,7 +12,7 @@
           @save="saveForm($event)"
           >
         </form-place>
-        <place-table @open="oepnModal()" @edit="editTour($event)" @remove="removeTour($event)"/>
+        <place-table :allPlaces="allPlaces" @open="oepnModal()" @edit="editTour($event)" @remove="removeTour($event)"/>
         <confirm-modal
           :show="isShowConfirmModal"
           @close="cancelRemove()" 
@@ -28,6 +28,8 @@
 import PlaceTable from "./components/PlaceTable.vue";
 import FormPlace from "./components/FormPlace.vue";
 import ConfirmModal from './components/ConfirmModal.vue';
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions, mapGetters } = createNamespacedHelpers('tour')
 
 export default {
   name: "place",
@@ -44,7 +46,11 @@ export default {
       currentIdRemove: "",
     };
   },
+  computed: {
+    ...mapGetters(['allPlaces'])
+  },
   methods: {
+    ...mapActions(['createPlaces', 'updatePlaces', 'getAllPlaces', 'deletePlaces']),
     handleSubmit(data) {
       // Do something with the data
       console.log(data)
@@ -60,16 +66,18 @@ export default {
     },
 
     editTour(tour) {
-      this.editingTour = tour;
-      this.showModal = true;
+      if(tour) {
+        this.editingTour = tour;
+        this.showModal = true;
+      }
     },
 
     saveForm(body) {
       const id = this.editingTour?.id;
       if (this.editingTour) {
-        this.$store.dispatch('updateProduct',{id, body});
+        this.updatePlaces({id: id, data: body});
       } else {
-        this.$store.dispatch('addProduct', body);
+        this.createPlaces(body);
       }
       this.showModal = false;
     },
@@ -85,7 +93,7 @@ export default {
       this.isShowConfirmModal = false;
     },
     confirmRemove() {
-      this.$store.dispatch('deleteProduct', this.currentIdRemove);
+      this.deletePlaces(this.currentIdRemove);
       this.isShowConfirmModal = false;
     },
   

@@ -1,11 +1,10 @@
 <template>
   <div class="base-select">
-    <select v-model="selectedValue" :disabled="disabled" :multiple="multiple">
+    <select v-model="selectedValue" :disabled="disabled" :multiple="multiple" v-on:change="$emit('change', $event)">
       <option v-for="(option, key) in options" :value="option.value" :key="key">{{ option.text }}</option>
     </select>
   </div>
 </template>
-
 <script>
 export default {
   name: "argon-select",
@@ -34,7 +33,7 @@ export default {
   },
   watch: {
     selectedValue(newValue) {
-      this.$emit("update:selectedOption", newValue)
+      this.selectedValue = newValue
     }
   }
 }
