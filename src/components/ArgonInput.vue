@@ -11,8 +11,8 @@
         :name="name"
         :id="id"
         :value="value"
+        :required="isRequired"
         :placeholder="placeholder"
-        :isRequired="isRequired"
       />
       <span v-if="iconDir === 'right'" class="input-group-text">
         <i :class="getIcon(icon)"></i>
@@ -66,6 +66,14 @@ export default {
 
 .errValid {
   border: 1px solid red !important; 
+}
+
+.form-control:invalid {
+  border-color: red;
+}
+.form-control:invalid:focus {
+  border-color: red;
+  box-shadow: none;
 }
 
 </style>

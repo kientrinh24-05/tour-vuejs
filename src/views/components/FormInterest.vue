@@ -116,6 +116,7 @@ export default {
       };
       this.$emit("save", data);
       this.closeModal();
+      this.resetForm()
     },
 
     resetForm() {

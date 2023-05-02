@@ -35,6 +35,8 @@ export default {
     selectedValue(newValue) {
       this.selectedValue = newValue
     }
+  },
+  mounted() {
   }
 }
 </script>

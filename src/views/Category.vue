@@ -66,7 +66,6 @@ export default {
     },
 
     editTour(tour) {
-      console.log(tour, 'tour');
       if(tour) {
         this.editingCategory = tour;
         this.showModal = true;
@@ -93,14 +92,13 @@ export default {
     cancelRemove() {
       this.isShowConfirmModal = false;
     },
+
     confirmRemove() {
       this.deleteCategory(this.currentIdRemove);
       this.isShowConfirmModal = false;
-    },
-  
+    }
   },
   created() {
-    console.log(this.categoryAll, '123');
     this.getAllCategory();
   },
 };

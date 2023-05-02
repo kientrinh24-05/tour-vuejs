@@ -6,6 +6,7 @@ import auth from './modules/auth';
 import category from './modules/category';
 import interest from './modules/interest';
 import places from './modules/places';
+import profile from './modules/profile';
 
 export default createStore({
   state: {
@@ -267,6 +268,7 @@ export default createStore({
     tour,
     category,
     interest,
-    places
+    places,
+    profile
   },
 });

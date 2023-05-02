@@ -14,43 +14,44 @@
             </div>
             <div class="card-body">
               <p class="text-uppercase text-sm">{{ Secondtitle }}</p>
-              <div class="row">
+              <form @submit.prevent="saveData">
+                <div class="row">
                 <div class="col-md-12">
                   <label for="example-text-input" class="form-control-label"
                     >Tên địa điểm</label
                   >
-                  <argon-input type="text" :value="formData.name" @input="formData.name = $event.target.value" />
+                  <argon-input type="text" :isRequired="true" :value="formData.name" @input="formData.name = $event.target.value" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Thành phố</label
                   >
-                  <argon-input type="email"  :value="formData.city" @input="formData.city = $event.target.value"/>
+                  <argon-input type="text" :isRequired="true"  :value="formData.city" @input="formData.city = $event.target.value"/>
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Tỉnh thành</label
                   >
-                  <input class="form-control" type="text" :value="formData.province" @input="formData.province = $event.target.value"/>
+                  <input class="form-control" required type="text" :value="formData.province" @input="formData.province = $event.target.value"/>
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Giá thành</label
                   >
-                  <argon-input type="text" :value="formData.price" @input="formData.price = $event.target.value" />
+                  <argon-input type="text" :isRequired="true" :value="formData.price" @input="formData.price = $event.target.value" />
                 </div>
 
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Đánh giá</label
                   >
-                  <argon-input type="text" :value="formData.rating" @input="formData.rating = $event.target.value" />
+                  <argon-input type="text" :isRequired="true" :value="formData.rating" @input="formData.rating = $event.target.value" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Thời gian</label
                   >
-                  <argon-input type="text" :value="formData.duration" @input="formData.duration = $event.target.value" />
+                  <argon-input type="text" :isRequired="true" :value="formData.duration" @input="formData.duration = $event.target.value" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
@@ -62,18 +63,19 @@
                   <label for="example-text-input" class="form-control-label"
                     >Thể loại du lịch</label
                   >
-                  <argon-select :options="tours" :selectedOption="formData.type"  @change="formData.type = $event.target.value" />
+                  
+                  <argon-select :options="optionCategory" :selectedOption="formData.type"  @change="formData.type = $event.target.value" />
     
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Địa diểm</label
                   >
-                  <argon-select :options="tours" :selectedOption="formData.places" @change="formData.places = $event.target.value"  />
+                  <argon-select :options="optionPlace" :selectedOption="formData.places" @change="formData.places = $event.target.value"  />
     
                 </div>
                 <div class="col-md-12">
-                  <argon-textarea type="text" :id="1" :value="formData.description" @input="formData.description = $event.target.value"  :placeholder="'Mời bạn nhập text vào'">
+                  <argon-textarea type="text" :isRequired="true" :id="1" :value="formData.description" @input="formData.description = $event.target.value"  :placeholder="'Mời bạn nhập text vào'">
                     Nội dung
                   </argon-textarea>
                 </div>
@@ -81,10 +83,11 @@
                 <div class="group-button d-flex align-items-center justify-content-end">
                   <argon-button color="primary" size="sm" class="btn-common-cancel" @click="closeModal()"
                   >Hủy bỏ</argon-button>
-                  <argon-button color="success" size="sm" class="btn-common" @click="saveData()"
+                  <argon-button color="success" size="sm" type="submit" class="btn-common"
                   >{{tour ? 'Lưu' : 'Tạo' }}</argon-button>
                 </div>
               </div>
+              </form>
               <hr class="horizontal dark" />
             </div>
           </div>
@@ -124,7 +127,19 @@ export default {
     Secondtitle: {
       type: String,
       default: "Modal Title"
-    }
+    },
+    optionCategory: {
+      type: Array,
+      default(){
+        return []
+      }
+    },
+    optionPlace: {
+      type: Array,
+      default(){
+        return []
+      }
+    },
   },
   data() {
     return {
@@ -141,16 +156,8 @@ export default {
         description: '',
         file: '',
      },
-      tours: [
-        { id: 1, value: 'TOUR_SEA', text: 'Du lịch biển'},
-        { id: 2, value: 'TOUR_CUISINE', text: 'Du lịch ẩm thực' },
-        { id: 3, value: 'TOUR_EXPLORE', text: 'Khám phá'},
-        { id: 4, value: 'TOUR_ADVENTURE', text: 'Phiêu lưu' },
-        { id: 5, value: 'TOUR_CONVALESCENCE', text: 'Hồi phục sức khỏe' },
-        { id: 6, value: 'TOUR_SIGHTSEEING', text: 'Tham quan' },
-        { id: 7, value: 'TOUR_CAMPING', text: 'Cắm trại' }
-      ],
-      
+    
+           
     }
   },
   watch: {
@@ -176,6 +183,7 @@ export default {
     },
     saveData() {
       const formData = new FormData();
+      let arrPlaces = this.formData.places.split(',')
       formData.append('name', this.formData.name);
       formData.append('city', this.formData.city);
       formData.append('province', this.formData.province);
@@ -184,7 +192,7 @@ export default {
       formData.append('duration', this.formData.duration);
       formData.append('image', this.formData.file);
       formData.append('type', this.formData.type);
-      formData.append('places', this.formData.places);
+      formData.append('places', arrPlaces);
       formData.append('description', this.formData.description);
       formData.append('categories', this.formData.categories);
       this.$emit("save", formData);
@@ -205,6 +213,7 @@ export default {
      }
     }
   }
+
 }
 </script>
 <style>

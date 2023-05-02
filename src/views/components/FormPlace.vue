@@ -21,7 +21,7 @@
                   >
                   <argon-input type="text" :value="name" @input="name = $event.target.value" />
                 </div>
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                   <label for="example-text-input" class="form-control-label"
                     >Điểm đến thứ nhất</label
                   >
@@ -38,7 +38,7 @@
                     >Điểm đến thứ ba</label
                   >
                   <argon-input type="text" :value="thirdDestination" @input="thirdDestination = $event.target.value" />
-                </div>
+                </div> -->
 
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
@@ -53,13 +53,19 @@
                   <argon-input type="text" :value="city" @input="city = $event.target.value" />
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-12">
                   <label for="example-text-input" class="form-control-label"
-                    >Giá tiền</label
+                    >Đường dẫn map</label
                   >
-                  <argon-input type="text" :value="price" @input="price = $event.target.value"/>
+                  <argon-input type="text" :value="link" @input="link = $event.target.value"/>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-12">
+                  <label for="example-text-input" class="form-control-label"
+                    >Hình ảnh</label
+                  >
+                  <argon-input type="file" :value="image" @input="image = $event.target.value" />
+                </div>
+                <!-- <div class="col-md-4">
                   <label for="example-text-input" class="form-control-label"
                     >Thể loại du lịch</label
                   >
@@ -78,7 +84,7 @@
                   <argon-textarea type="text" :id="1" :value="description" @input="description = $event.target.value"  :placeholder="'Mời bạn nhập text vào'">
                     Nội dung
                   </argon-textarea>
-                </div>
+                </div> -->
 
                 <div class="group-button d-flex align-items-center justify-content-end">
                   <argon-button color="primary" size="sm" class="btn-common-cancel" @click="closeModal()"
@@ -102,16 +108,16 @@
 <script>
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
-import ArgonSelect from "../../components/ArgonSelect.vue";
-import ArgonTextarea from "../../components/ArgonTextarea.vue";
+// import ArgonSelect from "../../components/ArgonSelect.vue";
+// import ArgonTextarea from "../../components/ArgonTextarea.vue";
 
 export default {
   name: "form-place",
   components: {
     ArgonInput,
     ArgonButton,
-    ArgonSelect,
-    ArgonTextarea
+    // ArgonSelect,
+    // ArgonTextarea
   },
   props: {
     show: {
@@ -130,25 +136,10 @@ export default {
   data() {
     return {
       name: "",
-      firstDestination: "",
-      secondDestination: "",
-      thirdDestination: "",
       province: "",
       city: "",
-      price: "",
-      rating: "",
-      type: "",
-      description:"",
-      tours: [
-        { id: 1, value: 'TOUR_SEA', text: 'Du lịch biển'},
-        { id: 2, value: 'TOUR_CUISINE', text: 'Du lịch ẩm thực' },
-        { id: 3, value: 'TOUR_EXPLORE', text: 'Khám phá'},
-        { id: 4, value: 'TOUR_ADVENTURE', text: 'Phiêu lưu' },
-        { id: 5, value: 'TOUR_CONVALESCENCE', text: 'Hồi phục sức khỏe' },
-        { id: 6, value: 'TOUR_SIGHTSEEING', text: 'Tham quan' },
-        { id: 7, value: 'TOUR_CAMPING', text: 'Cắm trại' }
-      ],
-      selectedOption: "",
+      link: "",
+      image: "",
     }
   },
   methods: {
@@ -156,23 +147,14 @@ export default {
       this.$emit("close", "");
     },
     saveData() {
-      const data = {
-        name: this.name,
-        firstDestination: this.firstDestination,
-        secondDestination: this.secondDestination,
-        thirdDestination: this.thirdDestination,
-        province: this.province,
-        city: this.city,
-        price: this.price,
-        rating: this.rating,
-        type: this.selectedOption,
-        description: this.description
-      };
-
-      console.log(data);
-      // return;
-      // this.$emit("save", data);
-      // this.closeModal();
+      const formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('city', this.city);
+      formData.append('province', this.province);
+      formData.append('link', this.rating);
+      formData.append('image', this.duration);
+      this.$emit("save", formData);
+      this.closeModal();
     }
   }
 }

@@ -5,10 +5,10 @@ const placesURL = `${types.URL}/places`;
 
 export default {
   createPlaces(data) {
-    return API.post(placesURL, {...data})
+    return API.post(placesURL, data, {isFormData: true});
   },
   updatePlaces(data) {
-    return API.put(`${placesURL}/${data.id}`, {...data.data})
+    return API.put(`${placesURL}/${data.id}`, data.data, {isFormData: true})
   },
   getAllPlaces() {
     return API.get(placesURL)

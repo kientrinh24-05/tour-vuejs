@@ -8,6 +8,7 @@
       rows="5"
       :placeholder="placeholder"
       :id="exampleFormControlTextarea1"
+      :required="isRequired"
     ></textarea>
   </div>
 </template>
@@ -18,6 +19,10 @@ export default {
   props: {
     id: String,
     placeholder: String,
+    isRequired: {
+      type: Boolean,
+      default: false
+    }
   },
 };
 </script>

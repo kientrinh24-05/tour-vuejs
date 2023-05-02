@@ -1,0 +1,2 @@
+export const UPLOAD_AVATAR = 'UPLOAD_AVATAR';
+export const UPDATE_USER = 'UPDATE_USER';

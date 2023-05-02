@@ -29,7 +29,7 @@ import PlaceTable from "./components/PlaceTable.vue";
 import FormPlace from "./components/FormPlace.vue";
 import ConfirmModal from './components/ConfirmModal.vue';
 import { createNamespacedHelpers } from 'vuex';
-const { mapActions, mapGetters } = createNamespacedHelpers('tour')
+const { mapActions, mapGetters } = createNamespacedHelpers('places')
 
 export default {
   name: "place",
@@ -97,6 +97,9 @@ export default {
       this.isShowConfirmModal = false;
     },
   
+  },
+  created() {
+    this.getAllPlaces();
   }
 };
 </script>

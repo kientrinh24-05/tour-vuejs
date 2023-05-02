@@ -5,6 +5,8 @@
         <form-tour 
           :show="showModal" 
           :tour="editingTour"
+          :optionCategory="optionCategory"
+          :optionPlace="optionPlace"
           :title="editingTour ? 'Edit Tour' : 'Create Tour'" 
           :Secondtitle="'Info Tour'" 
           @close="closeForm()" 
@@ -46,10 +48,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['allTours'])
+    ...mapGetters(['allTours', 'optionCategory', 'optionPlace'])
   },
   methods: {
-    ...mapActions(['createTour', 'updateTour', 'getAllTour', 'deleteTour']),
+    ...mapActions(['createTour', 'updateTour', 'getAllTour', 'deleteTour', 'getAllCategory', 'getAllPlaces']),
     handleSubmit(data) {
       // Do something with the data
       console.log(data, 'tour')
@@ -65,6 +67,7 @@ export default {
     },
 
     editTour(tour) {
+      console.log(tour, 'tour');
       if(tour) {
         this.editingTour = tour;
         this.showModal = true;
@@ -98,6 +101,8 @@ export default {
   },
   created() {
     this.getAllTour();
+    this.getAllCategory();
+    this.getAllPlaces();
   }
 };
 </script>

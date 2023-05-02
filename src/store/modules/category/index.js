@@ -5,10 +5,26 @@ const initInfo = [
   {
     id: 2,
     key: "TOUR_SEA",
-    name: "kien.trinh@gmail.com",
-    image:  null
+    name: "Bui Minh Trong",
+    image:  '/files/category.png'
+  },
+  {
+    id: 2,
+    key: "TOUR_CUISINE",
+    name: "Bui Dinh Tiến",
+    image:  '/files/category.png'
   }
 ]
+
+// const optionCategoryTmp = [
+//   { id: 1, value: 'TOUR_SEA', text: 'Du lịch biển'},
+//   { id: 2, value: 'TOUR_CUISINE', text: 'Du lịch ẩm thực' },
+//   { id: 3, value: 'TOUR_EXPLORE', text: 'Khám phá'},
+//   { id: 4, value: 'TOUR_ADVENTURE', text: 'Phiêu lưu' },
+//   { id: 5, value: 'TOUR_CONVALESCENCE', text: 'Hồi phục sức khỏe' },
+//   { id: 6, value: 'TOUR_SIGHTSEEING', text: 'Tham quan' },
+//   { id: 7, value: 'TOUR_CAMPING', text: 'Cắm trại' }
+// ]
 
 function getAllCategory(data) {
   return data.map(item => {
@@ -20,7 +36,6 @@ function getAllCategory(data) {
    }
   })
 }
-
 
 const state = {
   categoryAll: []

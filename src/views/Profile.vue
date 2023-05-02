@@ -203,7 +203,7 @@
               <div class="d-flex align-items-center">
                 <p class="mb-0">Chỉnh sửa thông tin</p>
                 <argon-button color="success" size="sm" class="ms-auto"
-                  >Cài đặt</argon-button
+                  >Update</argon-button
                 >
               </div>
             </div>
@@ -224,13 +224,13 @@
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
-                    >Tên lót</label
+                    >Password</label
                   >
                   <input class="form-control" type="text" value="Jesse" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
-                    >Tên đệm</label
+                    >Sở thích</label
                   >
                   <argon-input type="text" value="Lucky" />
                 </div>
@@ -290,6 +290,8 @@ import setTooltip from "@/assets/js/tooltip.js";
 import ProfileCard from "./components/ProfileCard.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions } = createNamespacedHelpers('profile')
 
 const body = document.getElementsByTagName("body")[0];
 
@@ -304,6 +306,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['uploadAvatar', 'getUserId']),
     emitEventLoadImage() {
       this.$refs.fileInput.click()
     },
@@ -312,9 +315,15 @@ export default {
       const reader = new FileReader()
       reader.onload = () => {
         this.imageUrl = reader.result
+        
       }
       reader.readAsDataURL(file)
+      let formData = new FormData();
+      this.uploadAvatar({id: 1, data: formData})
     }
+  },
+  created() {
+    this.getUserId(this.$route.query.id)
   },
   mounted() {
     this.$store.state.isAbsolute = true;

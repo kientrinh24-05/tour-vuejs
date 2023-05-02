@@ -114,7 +114,7 @@ export default {
     saveData() {
       const data = {
         name: this.formData.name,
-        key: this.formData.selectedOption,
+        key: this.formData.key,
       };
       this.$emit("save", data);
       this.closeModal();

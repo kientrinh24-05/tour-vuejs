@@ -101,7 +101,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.products)
+    // console.log(this.products)
   },
   created() {
     // this.$store.dispatch('fetchProducts');
