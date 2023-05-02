@@ -5,44 +5,26 @@ const allPlaces = [
   {
     "id": 1,
     "name": "Du l?ch test",
-    "duration": "Trong ngày",
     "province": "Bình Ð?nh",
     "city": "Quy Nhon",
-    "price": 250000.0,
-    "rating": 3,
-    "type": "TOUR_SEA",
-    "description": "Du l?ch di cu",
-    "image": "/files/category.png",
-    "places": "TOUR_SEA",
-    "categories": []
+    "link": "https://www.w3schools.com/tags/att_input_required.asp",
+    "image": null
 },
 {
     "id": 2,
     "name": "Du l?ch test",
-    "duration": "Trong ngày",
     "province": "Bình Ð?nh",
     "city": "Quy Nhon",
-    "price": 250000.0,
-    "rating": 3,
-    "type": "TOUR_SEA",
-    "description": "Du l?ch di cu",
-    "image": "/files/category.png",
-    "places": 'TOUR_SEA',
-    "categories": []
+    "link": "https://www.w3schools.com/tags/att_input_required.asp",
+    "image": null
 },
 {
     "id": 3,
     "name": "Du l?ch test",
-    "duration": "Trong ngày",
     "province": "Bình Ð?nh",
     "city": "Quy Nhon",
-    "price": 250000.0,
-    "rating": 3,
-    "type": "TOUR_SEA",
-    "description": "Du l?ch di cu",
-    "image": "/files/category.png",
-    "places": "TOUR_SEA",
-    "categories": []
+    "link": "https://www.w3schools.com/tags/att_input_required.asp",
+    "image": null
 }
 ]
 
@@ -51,16 +33,10 @@ function getAllPlaces(data) {
    return {
     id: item.id,
     name: item.name,
-    duration: item.duration,
     province: item.province,
     city: item.city,
-    price: item.price,
-    rating: item.rating,
-    type: item.type,
-    description: item.description,
-    image: item.image,
-    places: item.places,
-    categories: item.categories
+    link: item.link,
+    image: item.image
    }
   })
   

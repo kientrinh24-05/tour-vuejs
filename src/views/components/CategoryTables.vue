@@ -28,7 +28,7 @@
                 </div>
               </td>
               <td class="align-center">
-                      <div>
+                  <div>
                     <img
                       :src="category.image"
                       class="avatar avatar-sm me-3"

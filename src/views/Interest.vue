@@ -4,7 +4,7 @@
       <div class="col-12">
         <form-interest 
           :show="showModal" 
-          :tour="editingTour"
+          :category="editingTour"
           :title="editingTour ? 'Cập nhật sở thích' : 'Tạo mới sở thích'" 
           :Secondtitle="'Thông tin sở thích'" 
           @close="closeForm()" 
@@ -66,6 +66,7 @@ export default {
 
     editTour(tour) {
       if(tour) {
+        console.log(tour, 'tour');
         this.editingTour = tour;
         this.showModal = true;
       }

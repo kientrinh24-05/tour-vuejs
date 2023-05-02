@@ -49,7 +49,7 @@
               <td class="align-center d-flex align-items-center justify-content-center">
                 <div>
                     <img
-                      src="../../assets/img/team-2.jpg"
+                      :src="product.image"
                       class="avatar avatar-lg me-3"
                       alt="user1"
                     />

@@ -30,7 +30,7 @@ export default {
     selectItem(data) {
       console.log(data, 'user');
       this.$router.push({ path: '/profile', query: { id: data.id } }).catch();
-      
+      localStorage.setItem('userID', data.id)
     }
   },
   created(){

@@ -31,7 +31,7 @@
                 <div class="d-flex px-2 py-1">
                   <div>
                    <img
-                      src="../../assets/img/team-2.jpg"
+                      :src="product.image"
                       class="avatar avatar-sm me-3"
                       alt="user1"
                     />

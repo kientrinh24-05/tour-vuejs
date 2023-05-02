@@ -5,7 +5,7 @@
       <div class="col-12">
         <form-place 
           :show="showModal" 
-          :tour="editingTour"
+          :place="editingTour"
           :title="editingTour ? 'Edit Tour' : 'Create Tour'" 
           :Secondtitle="'Info Tour'" 
           @close="closeForm()" 

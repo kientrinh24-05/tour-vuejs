@@ -202,7 +202,7 @@
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
                 <p class="mb-0">Chỉnh sửa thông tin</p>
-                <argon-button color="success" size="sm" class="ms-auto"
+                <argon-button color="success" size="sm" class="ms-auto" @click="handleUpdateProfile"
                   >Update</argon-button
                 >
               </div>
@@ -214,28 +214,28 @@
                   <label for="example-text-input" class="form-control-label"
                     >Họ tên</label
                   >
-                  <argon-input type="text" value="lucky.jesse" />
+                  <argon-input type="text" :value="formData.name" @input="formData.name = $event.target.value"/>
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Email</label
                   >
-                  <argon-input type="email" value="jesse@example.com" />
+                  <argon-input type="email" :value="formData.email" @input="formData.email = $event.target.value" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Password</label
                   >
-                  <input class="form-control" type="text" value="Jesse" />
+                  <argon-input type="password" :value="formData.password" @input="formData.password = $event.target.value" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Sở thích</label
                   >
-                  <argon-input type="text" value="Lucky" />
+                  <argon-input type="text" :value="formData.interest" @input="formData.interest = $event.target.value" />
                 </div>
               </div>
-              <hr class="horizontal dark" />
+              <!-- <hr class="horizontal dark" />
               <p class="text-uppercase text-sm">Thông tin liên lạc</p>
               <div class="row">
                 <div class="col-md-12">
@@ -272,7 +272,7 @@
                     value="A beautiful Dashboard for Bootstrap 5. It is Free and Open Source."
                   />
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -291,7 +291,7 @@ import ProfileCard from "./components/ProfileCard.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 import { createNamespacedHelpers } from 'vuex';
-const { mapActions } = createNamespacedHelpers('profile')
+const { mapActions, mapGetters } = createNamespacedHelpers('profile')
 
 const body = document.getElementsByTagName("body")[0];
 
@@ -302,11 +302,23 @@ export default {
     return {
       showMenu: false,
       imageUrl: '',
-      fileInput: null 
+      fileInput: null ,
+      formData: {
+        name: '',
+        email: '',
+        password: '',
+        interest: ''
+      }
     };
   },
+  computed: {
+    ...mapGetters(['userID']),
+    id() {
+      return this.$route.query.id ? this.$route.query.id : localStorage.getItem('userID')
+    }
+  },
   methods: {
-    ...mapActions(['uploadAvatar', 'getUserId']),
+    ...mapActions(['uploadAvatar', 'getUserId', 'updateUser']),
     emitEventLoadImage() {
       this.$refs.fileInput.click()
     },
@@ -320,10 +332,14 @@ export default {
       reader.readAsDataURL(file)
       let formData = new FormData();
       this.uploadAvatar({id: 1, data: formData})
+    },
+    handleUpdateProfile(){
+      this.updateUser()
     }
   },
   created() {
-    this.getUserId(this.$route.query.id)
+    this.getUserId(this.id)
+    this.formData = {...this.userID}
   },
   mounted() {
     this.$store.state.isAbsolute = true;

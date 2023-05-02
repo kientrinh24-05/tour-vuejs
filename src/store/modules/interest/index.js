@@ -4,13 +4,13 @@ import interest from '../../../services/interest';
 const initInfo = [
   {
     id: 1,
-    key: "CAMPING",
-    name: "camping",
+    key: "TOUR_SEA",
+    name: "Du lịch biển",
   },
   {
     id: 2,
-    key: "PICNIC",
-    name: "picnic",
+    key: "TOUR_CUISINE",
+    name: "Du lịch ẩm thực",
   }
 ]
 

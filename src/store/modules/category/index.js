@@ -6,13 +6,13 @@ const initInfo = [
     id: 2,
     key: "TOUR_SEA",
     name: "Bui Minh Trong",
-    image:  '/files/category.png'
+    'image': '@/assets/img/bruce-mars.jpg'
   },
   {
     id: 2,
     key: "TOUR_CUISINE",
     name: "Bui Dinh Tiến",
-    image:  '/files/category.png'
+    image: '/files/category.png'
   }
 ]
 

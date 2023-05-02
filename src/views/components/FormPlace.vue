@@ -19,7 +19,7 @@
                   <label for="example-text-input" class="form-control-label"
                     >Tên địa điểm</label
                   >
-                  <argon-input type="text" :value="name" @input="name = $event.target.value" />
+                  <argon-input type="text" :value="formData.name" @input="formData.name = $event.target.value" />
                 </div>
                 <!-- <div class="col-md-4">
                   <label for="example-text-input" class="form-control-label"
@@ -44,26 +44,26 @@
                   <label for="example-text-input" class="form-control-label"
                     >Tỉnh</label
                   >
-                  <argon-input type="text" :value="province" @input="province = $event.target.value" />
+                  <argon-input type="text" :value="formData.province" @input="formData.province = $event.target.value" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"
                     >Thành phố</label
                   >
-                  <argon-input type="text" :value="city" @input="city = $event.target.value" />
+                  <argon-input type="text" :value="formData.city" @input="formData.city = $event.target.value" />
                 </div>
 
                 <div class="col-md-12">
                   <label for="example-text-input" class="form-control-label"
                     >Đường dẫn map</label
                   >
-                  <argon-input type="text" :value="link" @input="link = $event.target.value"/>
+                  <argon-input type="text" :value="formData.link" @input="formData.link = $event.target.value"/>
                 </div>
                 <div class="col-md-12">
                   <label for="example-text-input" class="form-control-label"
                     >Hình ảnh</label
                   >
-                  <argon-input type="file" :value="image" @input="image = $event.target.value" />
+                  <argon-input type="file" :value="formData.image" @input="formData.image = $event.target.value" />
                 </div>
                 <!-- <div class="col-md-4">
                   <label for="example-text-input" class="form-control-label"
@@ -120,6 +120,12 @@ export default {
     // ArgonTextarea
   },
   props: {
+    place: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
     show: {
       type: Boolean,
       default: false
@@ -135,11 +141,26 @@ export default {
   },
   data() {
     return {
-      name: "",
-      province: "",
-      city: "",
-      link: "",
-      image: "",
+      formData: {
+        name: "",
+        province: "",
+        city: "",
+        link: "",
+        image: "",
+      }
+    }
+  },
+  watch: {
+    place: {
+      handler(newVal) {
+        console.log(newVal, 'newVal');
+        if (newVal) { 
+          this.formData = {...newVal};
+        } else {
+          this.resetForm();
+        }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -148,13 +169,23 @@ export default {
     },
     saveData() {
       const formData = new FormData();
-      formData.append('name', this.name);
-      formData.append('city', this.city);
-      formData.append('province', this.province);
-      formData.append('link', this.rating);
-      formData.append('image', this.duration);
+      formData.append('name', this.formData.name);
+      formData.append('city', this.formData.city);
+      formData.append('province', this.formData.province);
+      formData.append('link', this.formData.link);
+      formData.append('image', this.formData.image);
       this.$emit("save", formData);
       this.closeModal();
+      this.resetForm();
+    },
+    resetForm() {
+      this.formData = {
+      name : "",
+      province :  "",
+      city :  "",
+      link : "",
+      image : ""
+      }
     }
   }
 }
