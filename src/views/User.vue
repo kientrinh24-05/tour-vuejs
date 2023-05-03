@@ -11,7 +11,7 @@
 <script>
 import UserTable from "./components/UserTable.vue";
 import { createNamespacedHelpers } from 'vuex';
-const { mapActions, mapGetters } = createNamespacedHelpers('profile')
+const { mapActions, mapGetters } = createNamespacedHelpers('auth')
 
 export default {
   name: "User",

@@ -1,3 +1,6 @@
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const REGISTER = 'REGISTER';
+export const UPLOAD_AVATAR = 'UPLOAD_AVATAR';
+export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_USERID = 'UPDATE_USERID';

@@ -25,100 +25,80 @@ const routes = [
     name: "Tổng quan",
     component: Dashboard,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/tour",
     name: "Tour",
     component: Tour,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/category",
     name: "Category",
     component: Category,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/interest",
     name: "Interest",
     component: Interest,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/place",
     name: "Place",
     component: Place,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/user",
     name: "User",
     component: User,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/billing",
     name: "Billing",
     component: Billing,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/virtual-reality",
     name: "Virtual Reality",
     component: VirtualReality,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/rtl-page",
     name: "RTL",
     component: RTL,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/profile",
     name: "Profile",
     component: Profile,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/signin",
@@ -130,10 +110,8 @@ const routes = [
     name: "search-intro",
     component: IntroTour,
     meta: {
-      requiresAuth: true,
-      isAdmin: true,
-      authorizedRoles: ['admin']
-    }
+      isPrivate: true
+    },
   },
   {
     path: "/signup",
@@ -149,16 +127,33 @@ const router = createRouter({
   linkActiveClass: "active",
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.requiresAuth) {
-//     next('/')
-//   } else {
-//     if (to.meta.isAdmin) {
-//       next('/user')
-//     } else {
-//       next()
-//     }
-//   }
-// })
+const validateRoute = (to, from , next) => {
+  const isAuthorize =  localStorage.getItem('users')
+  const isAdmin = isAuthorize && JSON.parse(isAuthorize).roles[0] === 'ROLE_ADMIN';
+  console.log(isAdmin, 'isAdmin');
+  const isUser = isAuthorize && JSON.parse(isAuthorize).roles[0] === 'ROLE_USER';
+  const isPrivate = to.matched.some(record => record.meta.isPrivate);
+  if(isPrivate) {
+    if (isAdmin) { 
+      console.log('v1');
+      next ()
+    }
+    else if (isUser) {
+      console.log('v2');
+      next({name: 'Signin'})
+    }
+    else { 
+      console.log('v3');
+      next({name: 'Signin'})
+    }
+  } else {
+    next();
+  }
+};
+
+router.beforeEach((to, from, next) => {
+  console.log('v555');
+  validateRoute(to, from, next);
+});
 
 export default router;
