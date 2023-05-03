@@ -64,7 +64,7 @@ const actions = {
     } catch (e) {
       commit(types.LOGIN_SUCCESS, {...initInfo})
       console.group('[Vuex][Actions] Error from login');
-      return Promise.reject(e.status);
+      return Promise.reject(e);
     }
   },
   async logout({ commit }) {

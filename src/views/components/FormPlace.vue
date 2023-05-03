@@ -2,7 +2,7 @@
   <div class="modal" v-if="show">
     <div class="py-4 container-fluid">
       <div class="row align-items-center justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-6 offset-md-3">
           <div class="card">
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">

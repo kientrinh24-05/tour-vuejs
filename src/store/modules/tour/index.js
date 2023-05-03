@@ -104,7 +104,7 @@ const actions = {
       return Promise.resolve(response.data);
     } catch (e) {
       console.group('[Vuex][Actions] Error from createTour');
-      return Promise.reject(e.status);
+      return Promise.reject(e);
     }
   },
   async updateTour({ commit }, data) {

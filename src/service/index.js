@@ -1,12 +1,6 @@
 import axios from "axios";
+// import cookie from 'cookiejs';
 // import store from '../store/index';
-// import {
-//   UNAUTHORIZED,
-//   FORBIDDEN,
-//   NOT_FOUND,
-//   INTERNAL_SERVER_ERROR,
-//   // USER_LOCAL_STORE,
-// } from "../utils/constant";
 
 const API = axios.create();
 
@@ -17,56 +11,15 @@ export const apiBase = (options) =>
       .catch((error) => reject(error));
   });
 
-// export const defaultRequestHeader = () => {
-//   const user = JSON.parse(localStorage.getItem(USER_LOCAL_STORE));
-//   if (user && user.token) {
-//     return {
-//       Authorization: "Bearer " + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MjQzNzQ5MCwiZXhwIjoxNjgyNTIzODkwfQ.Fuflkb9iLh5Ylt6ba7pgEFNYHAbS00MID5ZNgsHjvChj1p6cJOPwvmxJbs6hLO-qusxjZ1QptvFqMRwp51vowQ'
-//     };
-//   }
-//   return {};
-// };
-
-// const err = (error) => {
-//   const messError = error;
-//   const { response } = messError;
-//   if (response) {
-//     const { data, status } = response;
-//     switch (status) {
-//       case UNAUTHORIZED:
-//         messError.message = "Error " + UNAUTHORIZED;
-//         break;
-//       case FORBIDDEN:
-//         messError.message = `Error ${FORBIDDEN}`;
-//         break;
-//       case NOT_FOUND:
-//         messError.message = `Error ${NOT_FOUND}`;
-//         break;
-//       case INTERNAL_SERVER_ERROR:
-//         messError.message = `Error ${INTERNAL_SERVER_ERROR}`;
-//         break;
-//       default:
-//         messError.message = data.message;
-//     }
-//   }
-//   return Promise.reject(error);
-// };
-
-// API.interceptors.request.use(
-//   (config) => ({
-//     ...config,
-//     headers: {
-//       ...config.headers,
-//       ...defaultRequestHeader(),
-//     },
-//   }),
-//   err
-// );
-
 API.interceptors.request.use(
   config => {
-    let token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MjQzNzQ5MCwiZXhwIjoxNjgyNTIzODkwfQ.Fuflkb9iLh5Ylt6ba7pgEFNYHAbS00MID5ZNgsHjvChj1p6cJOPwvmxJbs6hLO-qusxjZ1QptvFqMRwp51vowQ'
-    if (token) config.headers.Authorization = 'Bearer ' + token;
+
+    let token = document.cookie;
+    // console.log(token);
+    
+   //let token = localStorage.getItem('token');
+   // const token = 'Bear' + `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ7XCJ1c2VySWRcIjoyLFwidXNlcm5hbWVcIjpcImtpZW5cIn0iLCJpYXQiOjE2ODMwNDU5ODgsImV4cCI6MTY4MzEzMjM4OH0.IR-v8QPaIC95fY3KTP1fPDCDwQO-AQXjgZGbXsrapBmo9QZMl_cptwlJ1ETbwVwPh-xnzY28eNstF2J5p9Y21w`;
+    if (token) config.headers.Authorization = token;
     if(config.isFormData) {
       config.headers['Content-Type'] = 'multipart/form-data'}
     else {

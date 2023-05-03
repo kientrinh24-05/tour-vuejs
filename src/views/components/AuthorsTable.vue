@@ -37,7 +37,7 @@
                 <div class="d-flex px-2 py-1">
                   <div>
                     <img
-                      :src="product.image"
+                      src="http://localhost:8080/files/341186111_778704636930793_841967102386453219_n.png"
                       class="avatar avatar-sm me-3"
                       alt="user1"
                     />

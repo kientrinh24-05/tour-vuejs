@@ -81,8 +81,10 @@ const routes = [
     name: "Virtual Reality",
     component: VirtualReality,
     meta: {
-      isPrivate: true
-    },
+      requiresAuth: true,
+      isAdmin: true,
+      authorizedRoles: ['admin']
+    }
   },
   {
     path: "/rtl-page",
