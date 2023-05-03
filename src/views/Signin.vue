@@ -96,7 +96,8 @@ export default {
         email:"",
         password:"",
       },
-    }
+      cookieName:"",
+    } 
   },
   methods: {
     ...mapActions(['login']),
@@ -107,6 +108,7 @@ export default {
       }
       this.login(data)
       .then(res => {
+        localStorage.setItem('token', res.cookieString.value);
         if (!res) return;
         router.push('/dashboard-default')
       })

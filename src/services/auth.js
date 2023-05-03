@@ -9,7 +9,8 @@ const userUrl = `${types.URL}/user`;
 
 export default {
   login(data) {
-    return API.post(loginUrl, {...data}, { withCredentials: true })
+
+    return API.post(loginUrl, {...data})
   },
   logout() {
     return API.post(logoutUrl)

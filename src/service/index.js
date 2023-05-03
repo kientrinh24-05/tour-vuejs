@@ -13,13 +13,8 @@ export const apiBase = (options) =>
 
 API.interceptors.request.use(
   config => {
-
-    let token = document.cookie;
-    // console.log(token);
-    
-   //let token = localStorage.getItem('token');
-   // const token = 'Bear' + `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ7XCJ1c2VySWRcIjoyLFwidXNlcm5hbWVcIjpcImtpZW5cIn0iLCJpYXQiOjE2ODMwNDU5ODgsImV4cCI6MTY4MzEzMjM4OH0.IR-v8QPaIC95fY3KTP1fPDCDwQO-AQXjgZGbXsrapBmo9QZMl_cptwlJ1ETbwVwPh-xnzY28eNstF2J5p9Y21w`;
-    if (token) config.headers.Authorization = token;
+    let token = localStorage.getItem('token');
+    if (token) config.headers.Authorization = `Bearer ` + token;
     if(config.isFormData) {
       config.headers['Content-Type'] = 'multipart/form-data'}
     else {

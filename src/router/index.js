@@ -10,6 +10,7 @@ import RTL from "../views/Rtl.vue";
 import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
 import Signin from "../views/Signin.vue";
+import HomePage from "../views/Home-page.vue";
 import IntroTour from "../views/IntroTour.vue";
 import User from "../views/User.vue";
 
@@ -108,6 +109,11 @@ const routes = [
     component: Signin,
   },
   {
+    path: "/home-page",
+    name: "Home Page",
+    component: HomePage,
+  },
+  {
     path: "/intro-tour",
     name: "search-intro",
     component: IntroTour,
@@ -129,33 +135,33 @@ const router = createRouter({
   linkActiveClass: "active",
 });
 
-const validateRoute = (to, from , next) => {
-  const isAuthorize =  localStorage.getItem('users')
-  const isAdmin = isAuthorize && JSON.parse(isAuthorize).roles[0] === 'ROLE_ADMIN';
-  console.log(isAdmin, 'isAdmin');
-  const isUser = isAuthorize && JSON.parse(isAuthorize).roles[0] === 'ROLE_USER';
-  const isPrivate = to.matched.some(record => record.meta.isPrivate);
-  if(isPrivate) {
-    if (isAdmin) { 
-      console.log('v1');
-      next ()
-    }
-    else if (isUser) {
-      console.log('v2');
-      next({name: 'Signin'})
-    }
-    else { 
-      console.log('v3');
-      next({name: 'Signin'})
-    }
-  } else {
-    next();
-  }
-};
+// const validateRoute = (to, from , next) => {
+//   const isAuthorize =  localStorage.getItem('users')
+//   const isAdmin = isAuthorize && JSON.parse(isAuthorize).roles[0] === 'ROLE_ADMIN';
+//   console.log(isAdmin, 'isAdmin');
+//   const isUser = isAuthorize && JSON.parse(isAuthorize).roles[0] === 'ROLE_USER';
+//   const isPrivate = to.matched.some(record => record.meta.isPrivate);
+//   if(isPrivate) {
+//     if (isAdmin) { 
+//       console.log('v1');
+//       next ()
+//     }
+//     else if (isUser) {
+//       console.log('v2');
+//       next({name: 'Signin'})
+//     }
+//     else { 
+//       console.log('v3');
+//       next({name: 'Signin'})
+//     }
+//   } else {
+//     next();
+//   }
+// };
 
-router.beforeEach((to, from, next) => {
-  console.log('v555');
-  validateRoute(to, from, next);
-});
+// router.beforeEach((to, from, next) => {
+//   console.log('v555');
+//   validateRoute(to, from, next);
+// });
 
 export default router;

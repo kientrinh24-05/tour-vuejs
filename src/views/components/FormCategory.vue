@@ -80,6 +80,7 @@ export default {
       formData: {
         name: "",
         key:"",
+        image: null
       },
       tours: [
         { id: 1, value: 'TOUR_SEA', text: 'Du lịch biển'},
@@ -115,9 +116,11 @@ export default {
       const data = {
         name: this.formData.name,
         key: this.formData.key,
+        image: null
       };
       this.$emit("save", data);
       this.closeModal();
+      this.resetForm();
     },
 
     resetForm() {
