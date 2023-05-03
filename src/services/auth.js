@@ -1,4 +1,4 @@
-import { apiBase } from "../service"
+import API from "../service"
 import * as types from '../utils/constant';
 
 const loginUrl = `${types.URL}/auth/login`;
@@ -9,10 +9,10 @@ const userUrl = `${types.URL}/user`;
 
 export default {
   login(data) {
-    return apiBase.post(loginUrl, {...data}, { withCredentials: true })
+    return API.post(loginUrl, {...data}, { withCredentials: true })
   },
   logout() {
-    return apiBase.post(logoutUrl)
+    return API.post(logoutUrl)
   },
   register(data) {
     return API.post(registerUrl, {...data})
