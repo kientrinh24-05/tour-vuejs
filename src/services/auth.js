@@ -6,6 +6,7 @@ const logoutUrl = `${types.URL}/auth/signout`;
 const registerUrl = `${types.URL}/auth/register`;
 const uploadAvatarUrl = `${types.URL}/user/upload-avatar`;
 const userUrl = `${types.URL}/user`;
+const searchUrl = `${types.URL}/search`;
 
 export default {
   login(data) {
@@ -30,4 +31,7 @@ export default {
   updateUser(data) {
     return API.get(`${userUrl}/${data.id}`, data.data, {isFormData: true})
   },
+  search(params) {
+    return API.get(searchUrl, {...params})
+  }
 }

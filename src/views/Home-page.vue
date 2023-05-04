@@ -21,7 +21,8 @@
       <div class="search-container container">
         <div
           class="search-container__searchbar-datepicker-wrapper search-container__searchbar-datepicker-wrapper--srp-to-trip-item-experiment">
-          <div class="search-autocomplete autocomplete-improvements">
+          
+          <div class="search-autocomplete autocomplete-improvements option-relative">
             <section class="autocomplete-search-box">
               <div title="Where are you going?" data-test-id="search-box"
                 class="search-box js-search-box search-box__modal">
@@ -33,7 +34,7 @@
                           <use xlink:href="#c-search-magnifier"></use>
                         </svg> <!----></span>
                     </span>
-                    <div class="c-input__container"><!----> 
+                    <div class="c-input__container"><!---->                      
                       <input 
                       v-model="query"
                       @input="handleInput"
@@ -45,10 +46,10 @@
                       name="q" 
                       required="required" 
                       type="text"
-                      class="c-input__field">
-                      </div> 
-
-                      <ul v-if="results.length > 0">
+                      class="c-input__field cccc">
+                      
+                    </div> 
+                    <ul v-if="results.length > 0" class="option-absolute">
                         <li
                           v-for="(result, index) in results"
                           :key="index"
@@ -56,9 +57,10 @@
                           @mouseenter="selectedIndex = index"
                           @click="handleResultClick(result)"
                         >
-                          {{ result }}
+                          {{ result.place }}
                         </li>s
                       </ul>
+                      
                   </div>
                 </div>
                 <div class="form-group autocomplete-improvements__search-button-container"><button type="button"
@@ -404,7 +406,10 @@
 </main></template>
 
 <script>
+import debounce from 'debounce'
 const body = document.getElementsByTagName("body")[0];
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions } = createNamespacedHelpers('auth')
 
 export default {
   name: "home-page",
@@ -417,26 +422,44 @@ export default {
         password: "",
       },
       query: "",
-      results: [],
+      results: [
+        { place: "Old Man's War" },
+        { place: "The Lock Artist" },
+        { place: "HTML5" },
+        { place: "Right Ho Jeeves" },
+        { place: "The Code of the Wooster" },
+        { place: "Thank You Jeeves" }
+      ],
       selectedIndex: -1,
+      selected: null,
     }
   },
   methods: {
+    ...mapActions(['search']),
     async handleInput() {
       if (this.query === "") {
         this.results = [];
         this.selectedIndex = -1;
         return;
       }
-      try {
-        // const response = await fetch(`https://api.example.com/search?q=${this.query}`);
-        const response = await fetch(`http://localhost:8080/api/search?query=${this.query}l&city=&province=&interests=ABC&interests=SEA`);
-        const results = await response.json();
-        this.results = results;
-        this.selectedIndex = -1;
-      } catch (error) {
-        console.log(error);
-      }
+      debounce(() => {
+        let interests = JSON.parse(localStorage.getItem('users')).interests
+        let params = {
+        query: this.query,
+        city: '',
+        province: '',
+        interests: interests
+        }
+        this.search({params})
+        .then((res) => {
+          /// data options nhét vô ây
+
+          this.results = res
+        })
+        .catch(error => {
+          console.log(error)
+        })
+        }, 500)()
     },
     handleUpArrow() {
       if (this.selectedIndex > 0) {
@@ -488,5 +511,15 @@ export default {
 
 .checked {
   color: orange;
+}
+
+.option-absolute {
+  position: absolute;
+  top: 52px;
+  width: 100%;
+}
+
+.option-relative {
+  position: relative;
 }
 </style>

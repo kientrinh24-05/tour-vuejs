@@ -34,11 +34,10 @@
           </div>
         </div>
         <ul class="navbar-nav justify-content-end">
-          <li class="nav-item d-flex align-items-center">
+          <li v-if="!userID" class="nav-item d-flex align-items-center">
             <router-link
               :to="{ name: 'Signin' }"
               class="px-0 nav-link font-weight-bold text-white"
-              target="_blank"
             >
               <i
                 class="fa fa-user"
@@ -49,6 +48,15 @@
               >
               <span v-else class="d-sm-inline d-none">Đăng nhập</span>
             </router-link>
+          </li>
+          <li v-if="userID" class="nav-item d-flex align-items-center">
+            <router-link
+              :to="{ name: 'Signin' }"
+              class="px-0 nav-link font-weight-bold text-white"
+            >
+            <i class="fa fa-user"></i>
+            <span class="d-sm-inline d-none" @click="logout()">Đăng xuất</span>
+          </router-link>
           </li>
           <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a
@@ -214,11 +222,14 @@ export default {
   },
   methods: {
     ...mapMutations(["navbarMinimize", "toggleConfigurator"]),
-    ...mapActions(["toggleSidebarColor"]),
+    ...mapActions(['toggleSidebarColor']),
 
     toggleSidebar() {
       this.toggleSidebarColor("bg-white");
       this.navbarMinimize();
+    },
+    logout() {
+      console.log(this.$store.dispatch('auth/logout'));
     }
   },
   components: {
@@ -227,6 +238,9 @@ export default {
   computed: {
     currentRouteName() {
       return this.$route.name;
+    },
+    userID() {
+      return localStorage.getItem('userID')
     }
   }
 };

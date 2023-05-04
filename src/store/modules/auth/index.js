@@ -125,7 +125,18 @@ const actions = {
       console.group('[Vuex][Actions] Error from getUserId');
       return Promise.reject(e.status);
     }
+  },
+  async search({ commit }, data) {
+    try {
+      const response = await auth.search(data);
+      commit(types.REGISTER);
+      return Promise.resolve(response.data);
+    } catch (e) {
+      console.group('[Vuex][Actions] Error from getUserId');
+      return Promise.reject(e.status);
+    }
   }
+  
 }
 
 const mutations = {
