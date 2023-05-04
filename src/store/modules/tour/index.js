@@ -3,50 +3,7 @@ import tour from '../../../services/tour';
 import category from '../../../services/category';
 import places from '../../../services/places';
 
-const allTourTmp = [
-  {
-    id: 1,
-    name: "Du l?ch test",
-    duration: "Trong ngày",
-    province: "Bình Ð?nh",
-    city: "Quy Nhon",
-    price: 250000.0,
-    rating: 3,
-    type: "TOUR_SEA",
-    description: "Du l?ch di cu",
-    image: "/files/category.png",
-    places: ["TOUR_SEA"],
-    categories: []
-},
-{
-    "id": 2,
-    "name": "Du l?ch test",
-    "duration": "Trong ngày",
-    "province": "Bình Ð?nh",
-    "city": "Quy Nhon",
-    "price": 250000.0,
-    "rating": 3,
-    "type": "TOUR_SEA",
-    "description": "Du l?ch di cu",
-    "image": "/files/category.png",
-    "places": ["TOUR_SEA"],
-    "categories": []
-},
-{
-    "id": 3,
-    "name": "Du l?ch test",
-    "duration": "Trong ngày",
-    "province": "Bình Ð?nh",
-    "city": "Quy Nhon",
-    "price": 250000.0,
-    "rating": 3,
-    "type": "TOUR_SEA",
-    "description": "Du l?ch di cu",
-    "image": "/files/category.png",
-    "places": ["TOUR_SEA"],
-    "categories": []
-}
-]
+const allTourTmp = []
 
 const optionCategoryTmp = [
   { id: 1, value: 'TOUR_SEA', text: 'Du lịch biển'},
@@ -85,9 +42,9 @@ const state = {
 }
 
 const getters = {
-  allTours: state => {
-    return state.allTours && state.allTours.length > 0 ? getAllTour(state.allTours) : getAllTour(allTourTmp);
-  },
+    allTours: state => {
+      return state.allTours && state.allTours.length > 0 ? getAllTour(state.allTours) : getAllTour(allTourTmp);
+    },
   optionCategory: state => {
     return state.optionCategory && state.optionCategory.length > 0 ? state.optionCategory : optionCategoryTmp;
   },

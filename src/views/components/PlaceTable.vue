@@ -37,27 +37,23 @@
                 </div>
               </td>
               <td class="align-center">
-                <p class="text-xs font-weight-bold mb-0">{{product.firstDestination}}</p>
+                <p class="text-xs font-weight-bold mb-0">{{product.city}}</p>
               </td>
-              <td class="align-center">
-                <p class="text-xs font-weight-bold mb-0">{{product.secondDestination}}</p>
+              <td class="align-center text-center">
+                <p class="text-xs font-weight-bold mb-0">{{product.province}}</p>
               </td>
-
-              <td class="align-center">
-                <p class="text-xs font-weight-bold mb-0">{{product.province}} {{product.city}}</p>
+              <td class="align-center text-center">
+                <a :href="product.mapLink ? product.mapLink : 'https://www.google.com/maps/place/Ph%C3%BA+Qu%E1%BB%91c/@10.2231901,103.9266019,10.84z/data=!4m6!3m5!1s0x31a78c62b49eda17:0x8aa79fbbdd72cdb!8m2!3d10.289879!4d103.98402!16zL20vMDVtcG43?authuser=0'" class="align-center text-xs font-weight-bold mb-0 link-text">Link map </a>
               </td>
               <td class="align-center d-flex align-items-center justify-content-center">
                 <div>
                     <img
-                      :src="product.image"
+                      :src="'http://localhost:8080' + product.image"
                       class="avatar avatar-lg me-3"
                       alt="user1"
                     />
                   </div>
               </td>
-              <!-- <td class="align-center text-center text-sm">
-                <span class="badge badge-sm bg-gradient-success">{{product.type}}</span>
-              </td> -->
         
               <td class="align-middle">
                 <a
@@ -85,11 +81,20 @@
 
 <script>
 import ArgonButton from "@/components/ArgonButton.vue";
+import VueLinkify from 'vue-linkify'
 // import { mapGetters } from 'vuex';
 export default {
   name: "place-table",
   components: {
     ArgonButton,
+  },
+  directives: {
+    linkified: VueLinkify.directive
+  },
+  data() {
+    return {
+      message: 'Đây là một ví dụ về link: https://example.com'
+    }
   },
   props: {
     tour: Object,
@@ -116,6 +121,10 @@ export default {
       this.$emit("open", "");
     },
 
+    redirectLink(link) {
+      console.log(link);
+    },
+
     handleEdit(tour) {
       this.$emit('edit', tour);
     },
@@ -130,5 +139,12 @@ export default {
 .text-edit {
   margin-right: 10px;
   cursor: pointer;
+}
+.text-center {
+  text-align: center;
+}
+
+.link-text {
+  text-decoration: underline;
 }
 </style>

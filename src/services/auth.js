@@ -10,7 +10,6 @@ const searchUrl = `${types.URL}/search`;
 
 export default {
   login(data) {
-
     return API.post(loginUrl, {...data})
   },
   logout() {

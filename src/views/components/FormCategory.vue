@@ -17,6 +17,12 @@
               <div class="row">
                 <div class="col-md-12">
                   <label for="example-text-input" class="form-control-label"
+                    >Hình ảnh</label
+                  >
+                  <argon-input type="file" :value="formData.file" @input="formData.file = $event.target.files[0]" />
+                </div>
+                <div class="col-md-12">
+                  <label for="example-text-input" class="form-control-label"
                     >Thể loại tour</label
                   >
                   <argon-select :options="tours" :selectedOption="formData.key" @change="formData.key = $event.target.value"  />
@@ -80,16 +86,15 @@ export default {
       formData: {
         name: "",
         key:"",
-        image: null
+        file: null
       },
       tours: [
-        { id: 1, value: 'TOUR_SEA', text: 'Du lịch biển'},
-        { id: 2, value: 'TOUR_CUISINE', text: 'Du lịch ẩm thực' },
-        { id: 3, value: 'TOUR_EXPLORE', text: 'Khám phá'},
-        { id: 4, value: 'TOUR_ADVENTURE', text: 'Phiêu lưu' },
-        { id: 5, value: 'TOUR_CONVALESCENCE', text: 'Hồi phục sức khỏe' },
-        { id: 6, value: 'TOUR_SIGHTSEEING', text: 'Tham quan' },
-        { id: 7, value: 'TOUR_CAMPING', text: 'Cắm trại' }
+        { id: 1, value: 'CULTURE_AND_HISTORY', text: 'Du lịch biển'},
+        { id: 2, value: 'UNDERGROUND_CATACOMBS', text: 'Du lịch ẩm thực' },
+        { id: 3, value: 'NATURE_AND_ADVANTURE', text: 'Khám phá'},
+        { id: 4, value: 'DAY_TRIP', text: 'Phiêu lưu' },
+        { id: 5, value: 'ARCHAOELOGY', text: 'Hồi phục sức khỏe' },
+        { id: 6, value: 'EXTREM_SPORTS', text: 'Tham quan' }
       ],
       
     }
@@ -113,12 +118,12 @@ export default {
       this.$emit("close", "");
     },
     saveData() {
-      const data = {
-        name: this.formData.name,
-        key: this.formData.key,
-        image: null
-      };
-      this.$emit("save", data);
+      const formData = new FormData();
+      formData.append('name', this.formData.name);
+      formData.append('key', this.formData.key);
+      formData.append('file', this.formData.file);
+
+      this.$emit("save", formData);
       this.closeModal();
       this.resetForm();
     },

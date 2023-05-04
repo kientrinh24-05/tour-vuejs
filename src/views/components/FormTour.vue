@@ -57,7 +57,7 @@
                   <label for="example-text-input" class="form-control-label"
                     >Hình ảnh</label
                   >
-                  <argon-input type="file" :value="formData.file" @input="formData.file = $event.target.value" />
+                  <argon-input type="file" :value="formData.file" @input="formData.file = $event.target.files[0]" />
                 </div>
                 <div class="col-md-6">
                   <label for="example-text-input" class="form-control-label"

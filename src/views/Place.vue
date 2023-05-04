@@ -45,9 +45,12 @@ export default {
       isShowConfirmModal: false,
       currentIdRemove: "",
     };
+
+ 
   },
   computed: {
     ...mapGetters(['allPlaces'])
+    
   },
   methods: {
     ...mapActions(['createPlaces', 'updatePlaces', 'getAllPlaces', 'deletePlaces']),

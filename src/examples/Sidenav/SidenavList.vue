@@ -81,41 +81,13 @@
         </sidenav-item>
       </li>
 
-      <li class="nav-item">
-        <sidenav-item
-          url="/profile"
-          :class="getRoute() === 'profile' ? 'active' : ''"
-          :navText="this.$store.state.isRTL ? 'حساب تعريفي' : 'Thông tin'"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-          </template>
-        </sidenav-item>
-      </li>
-      <li class="nav-item">
-        <sidenav-item
-          url="/signup"
-          :class="getRoute() === 'signup' ? 'active' : ''"
-          :navText="this.$store.state.isRTL ? 'اشتراك' : 'Đăng ký'"
-        >
-          <template v-slot:icon>
-            <i class="ni ni-collection text-info text-sm opacity-10"></i>
-          </template>
-        </sidenav-item>
-      </li>
+    
+    
     </ul>
-  </div>
-  <div class="pt-3 mx-3 mt-3 sidenav-footer">
-    <sidenav-card
-      :class="cardBg"
-      textPrimary="Cần hổ trợ?"
-      textSecondary="Hãy liên lạc với tôi"
-    />
   </div>
 </template>
 <script>
 import SidenavItem from "./SidenavItem.vue";
-import SidenavCard from "./SidenavCard.vue";
 
 export default {
   name: "SidenavList",
@@ -131,7 +103,6 @@ export default {
   },
   components: {
     SidenavItem,
-    SidenavCard
   },
   methods: {
     getRoute() {

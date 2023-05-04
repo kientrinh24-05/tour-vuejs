@@ -1,32 +1,7 @@
 import * as types from './types';
 import places from '../../../services/places';
 
-const allPlaces = [
-  {
-    "id": 1,
-    "name": "Du l?ch test",
-    "province": "Bình Ð?nh",
-    "city": "Quy Nhon",
-    "link": "https://www.w3schools.com/tags/att_input_required.asp",
-    "image": null
-},
-{
-    "id": 2,
-    "name": "Du l?ch test",
-    "province": "Bình Ð?nh",
-    "city": "Quy Nhon",
-    "link": "https://www.w3schools.com/tags/att_input_required.asp",
-    "image": null
-},
-{
-    "id": 3,
-    "name": "Du l?ch test",
-    "province": "Bình Ð?nh",
-    "city": "Quy Nhon",
-    "link": "https://www.w3schools.com/tags/att_input_required.asp",
-    "image": null
-}
-]
+const allPlaces = []
 
 function getAllPlaces(data) {
   return data.map(item => {
@@ -49,7 +24,7 @@ const state = {
 
 const getters = {
   allPlaces: state => {
-    return state.allPlaces ? getAllPlaces(allPlaces) : getAllPlaces(allPlaces);
+    return state.allPlaces ? getAllPlaces(state.allPlaces) : getAllPlaces(allPlaces);
   }
 }
 
@@ -81,7 +56,6 @@ const actions = {
       return Promise.resolve(response.data);
     } catch (e) {
       console.group('[Vuex][Actions] Error from getAllPlaces');
-      console.log(e,'eee');
       return Promise.reject(e.status);
     }
   },
